@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Profil{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h1 class="h3 mb-0">Modifier le Profil</h1>
+                        <p class="mb-0 text-white">Mettez à jour vos informations personnelles</p>
+                    </div>
+                    <div class="card-body p-4">
+                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                            <!-- Personal Information Section -->
+                            <fieldset class="mb-4">
+                                <legend class="h5 text-primary mb-3">Informations Personnelles</legend>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        {{ form_row(form.nom, {
+                                            'attr': {'class': 'form-control', 'placeholder': 'Votre nom'},
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        {{ form_row(form.prenom, {
+                                            'attr': {'class': 'form-control', 'placeholder': 'Votre prénom'},
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                    </div>
+                                </div>
+                             
+                            </fieldset>
+
+                            <!-- Contact Information Section -->
+                            <fieldset class="mb-4">
+                                <legend class="h5 text-primary mb-3">Coordonnées</legend>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        {{ form_row(form.numtel, {
+                                            'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'},
+                                            'label_attr': {'class': 'form-label'}
+                                        }) }}
+                                    </div>
+                                 
+                                </div>
+                            </fieldset>
+
+                            <!-- Save and Cancel Buttons -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save me-2"></i> Enregistrer les modifications
+                                </button>
+                                <a href="{{ path('app_profile') }}" class="btn btn-secondary">
+                                    <i class="fas fa-times me-2"></i> Annuler
+                                </a>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
