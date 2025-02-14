@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block body %}
+    <h1>Create new Article</h1>
+
+    {# Afficher les erreurs du formulaire si elles existent #}
+    {{ form_errors(form) }}
+
+    {# Rendre le formulaire correctement #}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_rest(form) }} {# Affiche tous les champs restants #}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_rest(form) }} {# Cette ligne assure que tous les champs du formulaire sont rendus #}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
