@@ -1,0 +1,15 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}New SuiviGrossesse{% endblock %}
+
+{% block main %}
+    <!-- Titre centré avec couleur et police différente -->
+    <h1 class="title-new-suivi">Create new SuiviGrossesse</h1>
+
+    {{ include('suivi_grossesse/_form.html.twig') }}
+
+    <!-- Lien "Back to List" avec le style sophistiqué -->
+    <a href="{{ path('app_suivi_grossesse_indexback') }}" class="btn-back-to-list">
+        <span class="icon">&#8592;</span> Back to list
+    </a>
+{% endblock %}

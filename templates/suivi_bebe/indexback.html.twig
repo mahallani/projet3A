@@ -1,0 +1,171 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste Suivi Bébé{% endblock %}
+
+{% block main %}
+    <!-- Titre de la page avec un style sophistiqué -->
+    <h1 class="title-list">Liste Suivi Bébé</h1>
+
+    <!-- Tableau stylisé -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Suivi Grossesse ID</th>
+                <th>Date de Suivi</th>
+                <th>Poids Bébé</th>
+                <th>Taille Bébé</th>
+                <th>État de Santé</th>
+                <th>Appétit Bébé</th>
+                <th>Battement du Cœur</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for suivi_bebe in suivi_bebes %}
+            <tr>
+                <td>{{ suivi_bebe.id }}</td>
+                <td>{{ suivi_bebe.suiviGrossesse.id }}</td>
+                <td>{{ suivi_bebe.dateSuivi ? suivi_bebe.dateSuivi|date('Y-m-d H:i') : 'Non défini' }}</td>
+                <td>{{ suivi_bebe.poidsBebe }}</td>
+                <td>{{ suivi_bebe.tailleBebe }}</td>
+                <td>{{ suivi_bebe.etatSante }}</td>
+                <td>{{ suivi_bebe.appetitBebe }}</td>
+                <td>{{ suivi_bebe.battementCoeur }}</td>
+                <td class="action-buttons">
+                    <!-- Icône Modifier -->
+                    <a href="{{ path('app_suivi_bebe_edit', {'id': suivi_bebe.id}) }}" class="btn-action">
+                        <i class="bi bi-pencil"></i> 
+                    </a>
+                    
+                    <!-- Formulaire pour la suppression -->
+                    <form action="{{ path('app_suivi_bebe_delete', {'id': suivi_bebe.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer ce suivi bébé ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ suivi_bebe.id) }}">
+                        <button type="submit" class="btn-action btn-danger">
+                            <i class="bi bi-trash"></i> 
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9" class="no-records">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if suivi_grossesse is defined and suivi_grossesse.id is not null %}
+        <a href="{{ path('app_suivi_bebe_new', {'suiviGrossesseId': suivi_grossesse.id}) }}" class="btn-create">
+            <i class="bi bi-plus-circle"></i> Ajouter un suivi bébé
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}  <!-- Inclure les styles déjà définis dans le fichier de base -->
+    <style>
+        /* Le CSS que tu veux appliquer ici */
+        .title-list {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 40px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f4f7fb;
+        }
+
+        .table tr:hover {
+            background-color: #eaf1ff;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-around; /* Pour espacer les boutons */
+            align-items: center;
+        }
+
+        .action-buttons .btn-action {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-size: 16px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .action-buttons .btn-action:hover {
+            transform: scale(1.1); /* Légère augmentation de la taille au survol */
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-create {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+        }
+
+        .btn-create:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Suivi Bébé{% endblock %}
+
+{% block main %}
+    <div class="pagetitle">
+        <h1>Liste Suivi Bébé</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li class="breadcrumb-item active">Liste Suivi Bébé</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Liste des suivis bébé</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Suivi Grossesse</th>
+                                        <th>Date de Suivi</th>
+                                        <th>Poids Bébé</th>
+                                        <th>Taille Bébé</th>
+                                        <th>État de Santé</th>
+                                        <th>Appétit</th>
+                                        <th>Battements</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for suivi_bebe in suivi_bebes %}
+                                        <tr>
+                                            <td>{{ suivi_bebe.id }}</td>
+                                            <td>{{ suivi_bebe.suiviGrossesse ? suivi_bebe.suiviGrossesse.id : 'N/A' }}</td>
+                                            <td>{{ suivi_bebe.dateSuivi ? suivi_bebe.dateSuivi|date('Y-m-d H:i') : 'Non défini' }}</td>
+                                            <td>{{ suivi_bebe.poidsBebe ? suivi_bebe.poidsBebe : 'Non défini' }}</td>
+                                            <td>{{ suivi_bebe.tailleBebe ? suivi_bebe.tailleBebe : 'Non défini' }}</td>
+                                            <td>{{ suivi_bebe.etatSante ? suivi_bebe.etatSante : 'Non défini' }}</td>
+                                            <td>{{ suivi_bebe.appetitBebe ? suivi_bebe.appetitBebe : 'Non défini' }}</td>
+                                            <td>{{ suivi_bebe.battementCoeur ? suivi_bebe.battementCoeur : 'Non défini' }}</td>
+                                           
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="9" class="text-center">Aucun enregistrement trouvé.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+       
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

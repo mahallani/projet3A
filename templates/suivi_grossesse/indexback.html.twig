@@ -1,0 +1,199 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste SuiviGrossesse{% endblock %}
+
+{% block main %}
+    <!-- Titre de la page avec un style sophistiqué -->
+    <h1 class="title-list">Liste SuiviGrossesse</h1>
+
+    <!-- Tableau stylisé -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date Suivi</th>
+                <th>Poids</th>
+                <th>Tension</th>
+                <th>Symptômes</th>
+                <th>Etat de la grossesse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for suivi_grossesse in suivi_grossesses %}
+            <tr>
+                <td>{{ suivi_grossesse.id }}</td>
+                <td>{{ suivi_grossesse.DateSuivi ? suivi_grossesse.DateSuivi|date('d-m-Y') : '' }}</td>
+                <td>{{ suivi_grossesse.Poids }} kg</td>
+                <td>{{ suivi_grossesse.Tension }}</td>
+                <td>{{ suivi_grossesse.Symptomes }}</td>
+                <td>{{ suivi_grossesse.EtatGrossesse }}</td>
+                <td class="action-buttons">
+                    <!-- Icône Delete -->
+                   <form action="{{ path('app_suivi_grossesse_delete', {'id': suivi_grossesse.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer ce suivi grossesse ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ suivi_grossesse.id) }}">
+    <button type="submit" class="btn-action btn-danger">
+        <i class="bi bi-trash"></i> 
+    </button>
+</form>
+
+                    <!-- Icône Edit -->
+                    <a href="{{ path('app_suivi_grossesse_edit', {'id': suivi_grossesse.id}) }}" class="btn-action">
+                        <i class="bi bi-pencil"></i> <!-- Icône d'édition -->
+ <a href="{{ path('app_suivi_bebe_new', {'suiviGrossesseId': suivi_grossesse.id}) }}" class="btn-action add-baby">
+    <i class="bi bi-plus-circle"></i> <!-- Icône de plus -->
+    <i class="bi bi-person-fill"></i> <!-- Icône représentant un petit garçon -->
+</a>
+
+
+
+
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" class="no-records">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_suivi_grossesse_new') }}" class="btn-create">
+        <i class="bi bi-plus-circle"></i> <!-- Icône pour créer un nouveau suivi -->
+        Créer un nouveau
+    </a>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}  <!-- Inclure les styles déjà définis dans le fichier de base -->
+    <style>
+        /* Le CSS que tu veux appliquer ici */
+        .title-list {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 40px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f4f7fb;
+        }
+
+        .table tr:hover {
+            background-color: #eaf1ff;
+        }
+
+        .action-buttons .btn-action {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-size: 20px;
+        }
+
+        .action-buttons .btn-action:hover {
+            transform: scale(1.2); /* Légère augmentation de la taille au survol */
+        }
+
+        .add-baby {
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #f0f8ff;
+            color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .add-baby:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .btn-create {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 40px;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+            text-align: center;
+        }
+
+        .btn-create:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .no-records {
+            text-align: center;
+            font-size: 16px;
+            color: #999;
+            font-style: italic;
+        }
+        .add-baby i {
+    margin-right: 8px;  /* Espace entre les deux icônes */
+}
+
+.add-baby {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #f0f8ff;
+    color: #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.add-baby:hover {
+    background-color: #007bff;
+    color: bleu;
+    transform: scale(1.2);
+}
+.add-baby i {
+    font-size: 24px; /* Ajuste la taille de l'icône */
+}
+
+
+    </style>
+{% endblock %}

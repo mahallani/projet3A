@@ -1,0 +1,13 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Edit SuiviGrossesse{% endblock %}
+
+{% block main %}
+    <h1>Edit SuiviGrossesse</h1>
+
+    {{ include('suivi_grossesse/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_suivi_grossesse_indexback') }}">back to list</a>
+
+
+{% endblock %}
