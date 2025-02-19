@@ -1,0 +1,108 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Ajouter une Disponibilité{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Ajouter une Disponibilité</h1>
+
+    <div class="card shadow p-4">
+       {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    <div class="mb-3">
+        {{ form_label(form.jour, 'Jour', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.jour, {'attr': {'class': 'form-control'}}) }}
+        <div class="text-danger">
+            {{ form_errors(form.jour) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+    {{ form_label(form.statutDisp, 'Statut', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.statutDisp, {'attr': {'class': 'form-select'}}) }}
+    <div class="text-danger">
+        {{ form_errors(form.statutDisp) }}
+    </div>
+</div>
+
+
+    <div class="mb-3">
+        {{ form_label(form.idMedecin, 'Médecin', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.idMedecin, {'attr': {'class': 'form-control'}}) }}
+        <div class="text-danger">
+            {{ form_errors(form.idMedecin) }}
+        </div>
+    </div>
+
+   <div id="time-slots" data-prototype="{{ form_widget(form.heuresDisp.vars.prototype)|e }}">
+    {% for heureDisp in form.heuresDisp %}
+        <div class="time-slot">
+            {{ form_widget(heureDisp, {'attr': {'class': 'form-control'}}) }}
+            <button type="button" class="remove-time-slot btn btn-danger">❌</button>
+            <div class="text-danger">
+                {{ form_errors(heureDisp) }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Erreur globale si aucun créneau horaire n'a été ajouté -->
+<div class="text-danger">
+    {{ form_errors(form.heuresDisp) }}
+</div>
+
+
+    <button type="button" id="add-time-slot" class="btn btn-primary mt-2 mb-3">➕ Ajouter un créneau</button>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Ajouter</button>
+    </div>
+
+{{ form_end(form) }}
+
+    </div>
+</div>
+<style>
+    .form-label {
+        color: #000 !important;  /* Texte en noir */
+        font-weight: bold;       /* Texte en gras */
+    }
+    
+    .form-control, .form-select {
+        color: #000 !important;  /* Texte en noir */
+        font-weight: bold;       /* Texte en gras */
+        border: 2px solid #000;  /* Bordure plus visible */
+    }
+
+    .btn-success {
+        font-weight: bold;       /* Texte en gras sur le bouton */
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let collectionHolder = document.querySelector('#time-slots');
+        let addButton = document.getElementById('add-time-slot');
+
+        if (!collectionHolder || !addButton) return;
+
+        let index = collectionHolder.children.length;
+        let prototype = collectionHolder.dataset.prototype;
+
+        addButton.addEventListener('click', function () {
+            let newForm = prototype.replace(/__name__/g, index);
+            let newElement = document.createElement('div');
+            newElement.classList.add('time-slot');
+            newElement.innerHTML = newForm + '<button type="button" class="remove-time-slot btn btn-danger">❌</button>';
+            collectionHolder.appendChild(newElement);
+            index++;
+        });
+
+        collectionHolder.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-time-slot')) {
+                e.target.parentElement.remove();
+            }
+        });
+    });
+</script>
+
+{% endblock %}

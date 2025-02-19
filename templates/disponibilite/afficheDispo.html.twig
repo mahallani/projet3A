@@ -1,0 +1,40 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %} Availability List {% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Availability List</h1>
+
+    <table class="table table-bordered table-striped text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>Jour</th>
+                <th>Heures Disponibles</th>
+                <th>Statut</th>
+                <th>ID Médecin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for disponibilite in disponibilites %}
+            <tr>
+                <td>{{ disponibilite.jour|date('Y-m-d') }}</td>
+                <td>
+                    {% for heureDisp in disponibilite.heuresDisp %}
+                        <span class="badge bg-primary">{{ heureDisp }}</span><br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if disponibilite.statutDisp == 'Disponible' %}
+                        <button class="btn btn-success btn-sm">Disponible</button>
+                    {% else %}
+                        <button class="btn btn-danger btn-sm">Indisponible</button>
+                    {% endif %}
+                </td>
+                <td>{{ disponibilite.idMedecin }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

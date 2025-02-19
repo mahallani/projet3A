@@ -1,0 +1,136 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Rendez-Vous{% endblock %}
+{% block main %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded">
+        <div class="card-header bg-primary text-white text-center">
+            <h2><i class="fas fa-calendar-plus"></i> Prendre un Rendez-Vous</h2>
+        </div>
+        <div class="card-body p-4">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            <!-- Sélection du Médecin -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Médecin</label>
+                {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
+            </div>
+
+            <!-- Sélection du Jour -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour du Rendez-Vous</label>
+                {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
+            </div>
+
+              <!-- Sélection de l'Heure -->
+         <div class="d-flex justify-content-center">
+    <div class="mb-3 text-center">
+        <label class="form-label fw-bold"><i class="fas fa-clock"></i> Sélectionnez une heure</label>
+        <div class="input-group mx-auto" style="width: 250px;">
+            <span class="input-group-text bg-light"><i class="fas fa-clock"></i></span>
+            <select id="heureString_select" class="form-select">
+                <option value="">-- Sélectionnez une heure --</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Motif du Rendez-vous -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
+                {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <!-- Symptômes -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Symptômes</label>
+                {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <!-- Traitement en cours -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
+                {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <!-- Notes -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Notes</label>
+                {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <!-- Bouton Ajouter -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Ajouter</button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<style>
+    .form-label {
+        color: #000 !important;  /* Texte en noir */
+        font-weight: bold;       /* Texte en gras */
+    }
+    
+    .form-control, .form-select {
+        color: #000 !important;  /* Texte en noir */
+        font-weight: bold;       /* Texte en gras */
+        border: 2px solid #000;  /* Bordure plus visible */
+    }
+
+    .btn-success {
+        font-weight: bold;       /* Texte en gras sur le bouton */
+    }
+</style>
+
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    function loadAvailableTimes() {
+        let medecinId = $('#rendez_vous_idMedecin').val();
+        let jour = $('#rendez_vous_jour').val();
+        
+        if (medecinId && jour) {
+            $.ajax({
+                url: `/rendezvous/getAvailableTimes/${medecinId}/${encodeURIComponent(jour)}`,
+                type: 'GET',
+                success: function (response) {
+                    let select = $('#heureString_select');
+                    select.empty(); // Supprime les anciennes valeurs
+                    select.append(new Option('-- Sélectionnez une heure --', ''));
+
+                    if (response.length > 0) {
+                        response.forEach(function (time) {
+                            select.append(new Option(time, time));
+                        });
+                    } else {
+                        select.append(new Option('Aucune disponibilité', ''));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX :", status, error);
+                }
+            });
+        }
+    }
+
+    // Exécute la fonction quand l'utilisateur change le médecin ou la date
+    $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
+
+    // ✅ Stocker la valeur sélectionnée dans le champ caché
+    $('#heureString_select').change(function () {
+        $('#rendez_vous_heureString').val($(this).val());
+    });
+});
+
+</script>
+{% endblock %}
+
+
+{% endblock %}
