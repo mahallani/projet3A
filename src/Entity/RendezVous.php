@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\RendezVousRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: RendezVousRepository::class)]
 class RendezVous
@@ -17,12 +19,15 @@ class RendezVous
  
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le motif est obligatoire.")]
     private ?string $motif = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Les symptômes sont obligatoires.")]
     private ?string $symptomes = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Les traitements sont obligatoires.")]
     private ?string $traitementEnCours = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -38,12 +43,15 @@ class RendezVous
     private ?int $idMedecin = null;
     
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "L'heure du rendez-vous est obligatoire.")]
     private ?string $heureString = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
     private ?Disponibilite $heureR = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: "La date de création est obligatoire.")]
+    #[Assert\GreaterThan('today', message: "Le jour doit être dans le futur.")]
     private ?\DateTimeInterface $jour = null;
 
 

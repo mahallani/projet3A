@@ -29,6 +29,7 @@ class RendezVousType extends AbstractType
         ->add('jour', DateType::class, [
             'widget' => 'single_text',
             'html5' => true,
+            
         ])
         ->add('heureString', HiddenType::class, [
             'mapped' => true, // ✅ Stocke bien la valeur dans l'entité

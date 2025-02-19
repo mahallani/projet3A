@@ -15,13 +15,21 @@
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Médecin</label>
                 {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
+                <div class="text-danger">
+        {{ form_errors(form.idMedecin) }}
+         </div>
             </div>
+            
 
             <!-- Sélection du Jour -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour du Rendez-Vous</label>
                 {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
+                         <div class="text-danger">
+        {{ form_errors(form.jour) }}
+         </div>
             </div>
+    
 
               <!-- Sélection de l'Heure -->
          <div class="d-flex justify-content-center">
@@ -35,31 +43,47 @@
         </div>
     </div>
 </div>
+       <div class="text-danger">
+        {{ form_errors(form.heureString) }}
+         </div>
 
 
             <!-- Motif du Rendez-vous -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
                 {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
-            </div>
+                       <div class="text-danger">
+        {{ form_errors(form.motif) }}
+         </div>
 
+            </div>
+      
             <!-- Symptômes -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Symptômes</label>
                 {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
+                    <div class="text-danger">
+        {{ form_errors(form.symptomes) }}
+         </div>
             </div>
+         
 
             <!-- Traitement en cours -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
                 {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
+                      <div class="text-danger">
+        {{ form_errors(form.traitementEnCours) }}
+         </div>
             </div>
+       
 
             <!-- Notes -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Notes</label>
                 {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
             </div>
+
 
             <!-- Bouton Ajouter -->
             <div class="text-center mt-4">

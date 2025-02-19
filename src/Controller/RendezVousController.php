@@ -24,63 +24,7 @@ final class RendezVousController extends AbstractController
             'controller_name' => 'RendezVousController',
         ]);
     }
-    // #[Route('/rendezvous/new', name: 'app_rendezvous_new')]
-    // public function add(Request $request, EntityManagerInterface $em)
-    // {
-    //     $rendezVous = new RendezVous();
-    //     $form = $this->createForm(RendezVousType::class, $rendezVous);
-    //     $form->handleRequest($request);
-    
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         // 📌 Récupérer les valeurs du formulaire
-    //         $medecinId = $form->get('idMedecin')->getData(); // Récupérer l'ID du médecin
-    //         $jour = $form->get('jour')->getData(); // Récupérer le jour
-    //         $hS= $form->get('heureString')->getData();
-    
-    //         // 📌 Vérification des données
-    //         if (!$medecinId) {
-    //             $this->addFlash('error', 'Veuillez sélectionner un médecin.');
-    //             return $this->redirectToRoute('app_rendezvous_new');
-    //         }
-    //         if (!$jour) {
-    //             $this->addFlash('error', 'Veuillez sélectionner un jour.');
-    //             return $this->redirectToRoute('app_rendezvous_new');
-    //         }
-    //         if (!$heureString) {
-    //             $this->addFlash('error', 'Veuillez sélectionner une heure.');
-    //             return $this->redirectToRoute('app_rendezvous_new');
-    //         }
-    
-    //         // 📌 Trouver la disponibilité
-    //         $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
-    //             'idMedecin' => $medecinId,
-    //             'jour' => $jour
-    //         ]);
-    
-    //         if (!$disponibilite) {
-    //             $this->addFlash('error', "Aucune disponibilité trouvée pour ce médecin et ce jour.");
-    //             return $this->redirectToRoute('app_rendezvous_new');
-    //         }
-    
-    //         // 📌 Associer les valeurs au rendez-vous
-    //         $rendezVous->setIdMedecin($medecinId);  // ✅ Ajout de l'ID du médecin
-    //         $rendezVous->setHeureR($disponibilite);
-    //         $rendezVous->setheureString($h);
-    //         $rendezVous->setCreation(new \DateTime()); // 📌 Prend la date du jour
-    
-    //         // 📌 Sauvegarde
 
-    //         $em->persist($rendezVous);
-    //         $em->flush();
-    
-    //         $this->addFlash('success', 'Rendez-vous ajouté avec succès.');
-    //         return $this->redirectToRoute('app_rendezvous_list');
-    //     }
-    
-    //     return $this->render('rendez_vous/ajoutRendezVous.html.twig', [
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
 
   #[Route('/rendezvous/new', name: 'app_rendezvous_new')]
     public function add(Request $request, EntityManagerInterface $em)
@@ -97,13 +41,13 @@ final class RendezVousController extends AbstractController
             $jour = $form->get('jour')->getData();
 
 
-            // 📌 Vérifier la disponibilité du médecin
+         
             $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
                 'idMedecin' => $medecinId,
                 'jour' => $jour
             ]);
             if ($disponibilite) {
-                // Associer l'ID de la disponibilité au rendez-vous
+              
                 $rendezVous->setHeureR($disponibilite);
             }
             else {
@@ -130,14 +74,14 @@ final class RendezVousController extends AbstractController
     {
         $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
             'idMedecin' => $medecinId,
-            'jour' => new \DateTime($jour) // 📌 Convertir la date correctement
+            'jour' => new \DateTime($jour) 
         ]);
     
         if (!$disponibilite) {
             return new JsonResponse([], 404);
         }
     
-        // 🔹 Récupérer les heures disponibles depuis la table `Disponibilite`
+      
         $heuresDisponibles = $disponibilite->getHeuresDisp();
     
         if (is_string($heuresDisponibles)) {
@@ -148,7 +92,7 @@ final class RendezVousController extends AbstractController
             return new JsonResponse(['error' => 'Format incorrect'], 500);
         }
     
-        // 🔹 Récupérer les heures déjà réservées pour ce jour et ce médecin
+        
         $rendezVous = $em->getRepository(RendezVous::class)->findBy([
             'idMedecin' => $medecinId,
             'jour' => new \DateTime($jour)
@@ -178,8 +122,7 @@ public function listRendezVous(RendezVousRepository $RendezVousRepository): Resp
     ]);
 }
 #[Route('/rendezvous/edit/{id}', name: 'app_rendezvous_edit')]
-public function edit($id, Request $request, EntityManagerInterface $em, RendezVousRepository $rendezVousRepository, DisponibiliteRepository $disponibiliteRepository): Response
-{
+public function edit(  $id,   Request $request,  EntityManagerInterface $em,  RendezVousRepository $rendezVousRepository,   DisponibiliteRepository $disponibiliteRepository): Response {
     $rendezVous = $rendezVousRepository->find($id);
 
     if (!$rendezVous) {
@@ -189,11 +132,11 @@ public function edit($id, Request $request, EntityManagerInterface $em, RendezVo
     $form = $this->createForm(RendezVousType::class, $rendezVous);
     $form->handleRequest($request);
 
-    // Récupérer les informations du médecin et du jour actuel
+    // 📌 Récupérer les informations du médecin et du jour actuel
     $medecinId = $rendezVous->getIdMedecin();
     $jour = $rendezVous->getJour()->format('Y-m-d');
 
-    // 📌 Récupérer les horaires disponibles pour ce médecin et ce jour
+    // 🔹 Récupérer les disponibilités du médecin pour ce jour
     $disponibilite = $disponibiliteRepository->findOneBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -205,6 +148,23 @@ public function edit($id, Request $request, EntityManagerInterface $em, RendezVo
             ? json_decode($disponibilite->getHeuresDisp(), true)
             : $disponibilite->getHeuresDisp();
     }
+
+    // 🔹 Récupérer toutes les heures déjà réservées par d'autres patients
+    $rendezVousExistants = $rendezVousRepository->findBy([
+        'idMedecin' => $medecinId,
+        'jour' => new \DateTime($jour)
+    ]);
+
+    $heuresReservees = [];
+    foreach ($rendezVousExistants as $rdv) {
+        // Exclure l'heure actuelle du rendez-vous qu'on modifie
+        if ($rdv->getId() !== $id) {
+            $heuresReservees[] = $rdv->getHeureString();
+        }
+    }
+
+    // 🔹 Filtrer les heures disponibles en enlevant celles déjà réservées
+    $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
 
     if ($form->isSubmitted() && $form->isValid()) {
         $em->persist($rendezVous);
@@ -218,9 +178,11 @@ public function edit($id, Request $request, EntityManagerInterface $em, RendezVo
         'form' => $form->createView(),
         'title' => 'Modifier le Rendez-Vous',
         'ancienneHeure' => $rendezVous->getHeureString(),
-        'heuresDisponibles' => $heuresDisponibles
+        'heuresDisponibles' => array_values($heuresRestantes) // 🔥 On envoie uniquement les heures non réservées
     ]);
 }
+
+
 #[Route('/rendezvous/delete/{id}', name: 'app_rendezvous_delete')]
 public function deleteRendezVous($id, EntityManagerInterface $em, RendezVousRepository $rendezVousRepository): Response
 {
@@ -235,7 +197,89 @@ public function deleteRendezVous($id, EntityManagerInterface $em, RendezVousRepo
 
     return $this->redirectToRoute('app_rendezvous_list');
 }
+#[Route('/rendezvous/view/back', name: 'app_rendezvous_listBack')]
+public function listRendezVousBack(RendezVousRepository $RendezVousRepository): Response
+{
+    $rendezVousList = $RendezVousRepository->findAll(); // Récupère tous les rendez-vous
 
+    return $this->render('rendez_vous/afficheRendezVousBack.html.twig', [
+        'rendezVousList' => $rendezVousList
+    ]);
+}
+#[Route('/rendezvous/editBack/{id}', name: 'app_rendezvous_editBack')]
+public function editBack(  $id,   Request $request,  EntityManagerInterface $em,  RendezVousRepository $rendezVousRepository,   DisponibiliteRepository $disponibiliteRepository): Response {
+    $rendezVous = $rendezVousRepository->find($id);
 
+    if (!$rendezVous) {
+        throw $this->createNotFoundException("Le rendez-vous avec l'ID $id n'existe pas.");
+    }
+
+    $form = $this->createForm(RendezVousType::class, $rendezVous);
+    $form->handleRequest($request);
+
+    // 📌 Récupérer les informations du médecin et du jour actuel
+    $medecinId = $rendezVous->getIdMedecin();
+    $jour = $rendezVous->getJour()->format('Y-m-d');
+
+    // 🔹 Récupérer les disponibilités du médecin pour ce jour
+    $disponibilite = $disponibiliteRepository->findOneBy([
+        'idMedecin' => $medecinId,
+        'jour' => new \DateTime($jour)
+    ]);
+
+    $heuresDisponibles = [];
+    if ($disponibilite) {
+        $heuresDisponibles = is_string($disponibilite->getHeuresDisp())
+            ? json_decode($disponibilite->getHeuresDisp(), true)
+            : $disponibilite->getHeuresDisp();
+    }
+
+    // 🔹 Récupérer toutes les heures déjà réservées par d'autres patients
+    $rendezVousExistants = $rendezVousRepository->findBy([
+        'idMedecin' => $medecinId,
+        'jour' => new \DateTime($jour)
+    ]);
+
+    $heuresReservees = [];
+    foreach ($rendezVousExistants as $rdv) {
+        // Exclure l'heure actuelle du rendez-vous qu'on modifie
+        if ($rdv->getId() !== $id) {
+            $heuresReservees[] = $rdv->getHeureString();
+        }
+    }
+
+    // 🔹 Filtrer les heures disponibles en enlevant celles déjà réservées
+    $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $em->persist($rendezVous);
+        $em->flush();
+
+        $this->addFlash('success', 'Rendez-vous modifié avec succès.');
+        return $this->redirectToRoute('app_rendezvous_listBack');
+    }
+
+    return $this->render('rendez_vous/editRendezVousBack.html.twig', [
+        'form' => $form->createView(),
+        'title' => 'Modifier le Rendez-Vous',
+        'ancienneHeure' => $rendezVous->getHeureString(),
+        'heuresDisponibles' => array_values($heuresRestantes) // 🔥 On envoie uniquement les heures non réservées
+    ]);
+}
+
+#[Route('/rendezvous/deleteBack/{id}', name: 'app_rendezvous_deleteBack')]
+public function deleteRendezVousBack($id, EntityManagerInterface $em, RendezVousRepository $rendezVousRepository): Response
+{
+    $rendezVous = $rendezVousRepository->find($id);
+
+    if (!$rendezVous) {
+        throw $this->createNotFoundException("Le rendez-vous avec l'ID $id n'existe pas.");
+    }
+
+    $em->remove($rendezVous);
+    $em->flush();
+
+    return $this->redirectToRoute('app_rendezvous_listBack');
+}
 
 }
