@@ -1,0 +1,29 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Articles{% endblock %}
+
+{% block main %}
+    <h1>Articles disponibles</h1>
+
+   <div class="row">
+        {% for article in articles %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.titre }}</h5>
+                        <p class="card-text">{{ article.contenu | slice(0, 100) }}...</p>
+                        <p class="text-muted">{{ article.datearticle ? article.datearticle|date('Y-m-d H:i:s') : '' }}</p>
+                        <p>Reviews: {{ article.nbrevue }}</p>
+                        <p>Likes: {{ article.nbrelike }}</p>
+                          <a href="{{ path('app_add_commentairetoarticle', {'id': article.id}) }}" class="btn btn-warning">Commenter</a>
+                       {# <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-warning">Edit</a>#}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No records found.</p>
+        {% endfor %}
+    </div>
+
+    {#<a href="{{ path('app_article_new') }}">Create new</a>#}
+{% endblock %}

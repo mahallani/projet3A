@@ -1,0 +1,75 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'w-50'}}) }}
+
+    <div class="form-group">
+        {{ form_label(form.titre, 'Article Title') }}
+        {{ form_widget(form.titre, {'attr': {'class': 'form-control', 'placeholder': 'Enter article title'}}) }}
+        
+        {% for error in form.titre.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.contenu, 'Content') }}
+        {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Enter article content'}}) }}
+        
+        {% for error in form.contenu.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.datearticle, 'Date of Article') }}
+        {{ form_widget(form.datearticle, {'attr': {'class': 'form-control'}}) }}
+        
+        {% for error in form.datearticle.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.galerie, 'Gallery URL') }}
+        {{ form_widget(form.galerie, {'attr': {'class': 'form-control', 'placeholder': 'Enter gallery URL'}}) }}
+        
+        {% for error in form.galerie.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.nbrevue, 'Number of Reviews') }}
+        {{ form_widget(form.nbrevue, {'attr': {'class': 'form-control', 'placeholder': 'Enter number of reviews'}}) }}
+        
+        {% for error in form.nbrevue.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.nbrelike, 'Number of Likes') }}
+        {{ form_widget(form.nbrelike, {'attr': {'class': 'form-control', 'placeholder': 'Enter number of likes'}}) }}
+        
+        {% for error in form.nbrelike.vars.errors %}
+            <div class="text-danger">
+                {{ error.message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
