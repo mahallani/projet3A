@@ -35,7 +35,7 @@ final class RendezVousController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            // 📌 Vérification des données reçues
+      
             $requestData = $request->request->all();
             $medecinId = $form->get('idMedecin')->getData();
             $jour = $form->get('jour')->getData();
@@ -100,13 +100,13 @@ final class RendezVousController extends AbstractController
     
         $heuresReservees = [];
         foreach ($rendezVous as $rdv) {
-            $heuresReservees[] = $rdv->getHeureString(); // 📌 Récupère les heures déjà prises
+            $heuresReservees[] = $rdv->getHeureString(); 
         }
     
-        // 🔹 Filtrer les heures disponibles en retirant celles déjà réservées
+      
         $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
     
-        return new JsonResponse(array_values($heuresRestantes)); // ✅ Retourne la liste mise à jour
+        return new JsonResponse(array_values($heuresRestantes));
     }
     
 
@@ -115,7 +115,7 @@ final class RendezVousController extends AbstractController
 #[Route('/rendezvous/view', name: 'app_rendezvous_list')]
 public function listRendezVous(RendezVousRepository $RendezVousRepository): Response
 {
-    $rendezVousList = $RendezVousRepository->findAll(); // Récupère tous les rendez-vous
+    $rendezVousList = $RendezVousRepository->findAll();
 
     return $this->render('rendez_vous/afficheRendezVous.html.twig', [
         'rendezVousList' => $rendezVousList
@@ -132,11 +132,11 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
     $form = $this->createForm(RendezVousType::class, $rendezVous);
     $form->handleRequest($request);
 
-    // 📌 Récupérer les informations du médecin et du jour actuel
+  
     $medecinId = $rendezVous->getIdMedecin();
     $jour = $rendezVous->getJour()->format('Y-m-d');
 
-    // 🔹 Récupérer les disponibilités du médecin pour ce jour
+
     $disponibilite = $disponibiliteRepository->findOneBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -149,7 +149,7 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
             : $disponibilite->getHeuresDisp();
     }
 
-    // 🔹 Récupérer toutes les heures déjà réservées par d'autres patients
+  
     $rendezVousExistants = $rendezVousRepository->findBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -157,13 +157,13 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
 
     $heuresReservees = [];
     foreach ($rendezVousExistants as $rdv) {
-        // Exclure l'heure actuelle du rendez-vous qu'on modifie
+      
         if ($rdv->getId() !== $id) {
             $heuresReservees[] = $rdv->getHeureString();
         }
     }
 
-    // 🔹 Filtrer les heures disponibles en enlevant celles déjà réservées
+   
     $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -178,7 +178,7 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
         'form' => $form->createView(),
         'title' => 'Modifier le Rendez-Vous',
         'ancienneHeure' => $rendezVous->getHeureString(),
-        'heuresDisponibles' => array_values($heuresRestantes) // 🔥 On envoie uniquement les heures non réservées
+        'heuresDisponibles' => array_values($heuresRestantes) 
     ]);
 }
 
@@ -200,7 +200,7 @@ public function deleteRendezVous($id, EntityManagerInterface $em, RendezVousRepo
 #[Route('/rendezvous/view/back', name: 'app_rendezvous_listBack')]
 public function listRendezVousBack(RendezVousRepository $RendezVousRepository): Response
 {
-    $rendezVousList = $RendezVousRepository->findAll(); // Récupère tous les rendez-vous
+    $rendezVousList = $RendezVousRepository->findAll(); 
 
     return $this->render('rendez_vous/afficheRendezVousBack.html.twig', [
         'rendezVousList' => $rendezVousList
@@ -217,11 +217,11 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
     $form = $this->createForm(RendezVousType::class, $rendezVous);
     $form->handleRequest($request);
 
-    // 📌 Récupérer les informations du médecin et du jour actuel
+  
     $medecinId = $rendezVous->getIdMedecin();
     $jour = $rendezVous->getJour()->format('Y-m-d');
 
-    // 🔹 Récupérer les disponibilités du médecin pour ce jour
+  
     $disponibilite = $disponibiliteRepository->findOneBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -234,7 +234,7 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
             : $disponibilite->getHeuresDisp();
     }
 
-    // 🔹 Récupérer toutes les heures déjà réservées par d'autres patients
+  
     $rendezVousExistants = $rendezVousRepository->findBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -242,13 +242,13 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
 
     $heuresReservees = [];
     foreach ($rendezVousExistants as $rdv) {
-        // Exclure l'heure actuelle du rendez-vous qu'on modifie
+      
         if ($rdv->getId() !== $id) {
             $heuresReservees[] = $rdv->getHeureString();
         }
     }
 
-    // 🔹 Filtrer les heures disponibles en enlevant celles déjà réservées
+   
     $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -263,7 +263,7 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
         'form' => $form->createView(),
         'title' => 'Modifier le Rendez-Vous',
         'ancienneHeure' => $rendezVous->getHeureString(),
-        'heuresDisponibles' => array_values($heuresRestantes) // 🔥 On envoie uniquement les heures non réservées
+        'heuresDisponibles' => array_values($heuresRestantes)
     ]);
 }
 

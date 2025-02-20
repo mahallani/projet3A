@@ -11,7 +11,7 @@
         <div class="card-body p-4">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-            <!-- Sélection du Médecin -->
+      
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-user-md"></i> Médecin</label>
                 {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
@@ -21,7 +21,7 @@
             </div>
        
 
-            <!-- Sélection du Jour -->
+          
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour</label>
                 {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
@@ -31,17 +31,17 @@
 
             </div>
         
-<!-- Sélection de l'Heure -->
+
 <div class="d-flex justify-content-center">
     <div class="mb-3 text-center">
         <label class="form-label fw-bold"><i class="fas fa-clock"></i> Sélectionnez une heure</label>
         <div class="input-group mx-auto" style="width: 250px;">
             <span class="input-group-text bg-light"><i class="fas fa-clock"></i></span>
             <select id="heureString_select" name="heureString" class="form-select">
-                <!-- Affichage de l'heure actuellement sélectionnée -->
+             
                 <option value="{{ ancienneHeure }}" selected>{{ ancienneHeure }}</option>
 
-                <!-- Affichage des autres heures disponibles -->
+               
                 {% for heure in heuresDisponibles %}
                     {% if heure != ancienneHeure %}
                         <option value="{{ heure }}">{{ heure }}</option>
@@ -56,7 +56,7 @@
 
 
 
-            <!-- Motif du Rendez-vous -->
+         
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
                 {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
@@ -66,7 +66,7 @@
             </div>
       
 
-            <!-- Symptômes -->
+          
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-thermometer-half"></i> Symptômes</label>
                 {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
@@ -76,7 +76,7 @@
             </div>
   
 
-            <!-- Traitement en cours -->
+          
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
                 {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
@@ -86,7 +86,6 @@
             </div>
     
 
-            <!-- Notes -->
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-sticky-note"></i> Notes</label>
                 {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
@@ -94,7 +93,7 @@
             
 
 
-            <!-- Bouton Modifier -->
+          
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Modifier</button>
                 <a href="{{ path('app_rendezvous_listBack') }}" class="btn btn-secondary px-4"><i class="fas fa-arrow-left"></i> Retour</a>
@@ -118,7 +117,7 @@ $(document).ready(function () {
                 type: 'GET',
                 success: function (response) {
                     let select = $('#heureString_select');
-                    select.empty(); // Supprime les anciennes valeurs
+                    select.empty(); 
                     select.append(new Option('-- Sélectionnez une heure --', ''));
 
                     if (response.length > 0) {
@@ -136,10 +135,10 @@ $(document).ready(function () {
         }
     }
 
-    // Exécute la fonction quand l'utilisateur change le médecin ou la date
+  
     $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
 
-    // ✅ Stocker la valeur sélectionnée dans le champ caché
+   
     $('#heureString_select').change(function () {
         $('#rendez_vous_heureString').val($(this).val());
     });

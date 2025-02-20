@@ -68,10 +68,7 @@ class Disponibilite
         return $this;
     }
 
-    // public function getHeuresDisp(): array
-    // {
-    //     return $this->heuresDisp;
-    // }
+  
 
     public function getHeuresDisp(): array
 {
@@ -83,13 +80,6 @@ public function setHeuresDisp(array $heuresDisp): self
     $this->heuresDisp = $heuresDisp;
     return $this;
 }
-
-    // public function setHeuresDisp(array $heuresDisp): static
-    // {
-    //     $this->heuresDisp = $heuresDisp;
-
-    //     return $this;
-    // }
 
     public function getStatutDisp(): ?string
     {
@@ -140,7 +130,7 @@ public function setHeuresDisp(array $heuresDisp): self
     public function removeRendezVouse(RendezVous $rendezVouse): static
     {
         if ($this->rendezVouses->removeElement($rendezVouse)) {
-            // set the owning side to null (unless already changed)
+         
             if ($rendezVouse->getHeureR() === $this) {
                 $rendezVouse->setHeureR(null);
             }

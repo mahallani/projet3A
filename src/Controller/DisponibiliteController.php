@@ -41,10 +41,10 @@ final class DisponibiliteController extends AbstractController
     #[Route('/disponibilites', name: 'app_disponibilite_list')]
     public function listDisponibilites(DisponibiliteRepository $DisponibiliteRepository): Response
     {
-        $disponibilites = $DisponibiliteRepository->findAll(); // Récupère toutes les disponibilités
+        $disponibilites = $DisponibiliteRepository->findAll(); 
     
         return $this->render('disponibilite/afficheDispo.html.twig', [
-            'disponibilites' => $disponibilites // Pluriel pour être plus logique
+            'disponibilites' => $disponibilites 
         ]);
     }
     #[Route('/disponibilite/edit/{id}', name: 'app_disponibilite_edit')]
@@ -63,7 +63,7 @@ final class DisponibiliteController extends AbstractController
             $em->persist($disponibilite);
             $em->flush();
     
-            return $this->redirectToRoute('app_disponibilite_listBack'); // Redirection après modification
+            return $this->redirectToRoute('app_disponibilite_listBack'); 
         }
     
         return $this->render('disponibilite/editDispo.html.twig', [
@@ -110,10 +110,10 @@ final class DisponibiliteController extends AbstractController
     #[Route('/disponibilites/back', name: 'app_disponibilite_listBack')]
     public function listDisponibilitesBack(DisponibiliteRepository $DisponibiliteRepository): Response
     {
-        $disponibilites = $DisponibiliteRepository->findAll(); // Récupère toutes les disponibilités
+        $disponibilites = $DisponibiliteRepository->findAll(); 
     
         return $this->render('disponibilite/afficheDispoBack.html.twig', [
-            'disponibilites' => $disponibilites // Pluriel pour être plus logique
+            'disponibilites' => $disponibilites 
         ]);
     }
     

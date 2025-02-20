@@ -32,17 +32,11 @@ class RendezVousType extends AbstractType
             
         ])
         ->add('heureString', HiddenType::class, [
-            'mapped' => true, // ✅ Stocke bien la valeur dans l'entité
+            'mapped' => true, 
         ])
         
 
-        // ->add('heureString', ChoiceType::class, [
-        //     'choices' => [], // Rempli dynamiquement via AJAX
-        //     'placeholder' => 'Sélectionnez une heure disponible',
-        //     'required' => true,
-        //     'mapped' => false, // 🔥 Symfony ne va pas le mapper automatiquement
-        //     'attr' => ['class' => 'form-control']
-        // ])
+   
         ->add('motif')
         ->add('symptomes')
         ->add('traitementEnCours')
@@ -54,7 +48,7 @@ class RendezVousType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RendezVous::class,
-            'available_times' => [], // Option pour stocker les créneaux horaires du médecin
+            'available_times' => [], 
         ]);
     }
 }

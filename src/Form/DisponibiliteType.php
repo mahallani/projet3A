@@ -32,12 +32,12 @@ class DisponibiliteType extends AbstractType
                         '14:00 - 16:00' => '14:00-16:00',
                         '16:00 - 18:00' => '16:00-18:00',
                     ],
-                    'label' => false, // Supprime le label pour éviter la duplication
+                    'label' => false,
                 ],
-                'allow_add' => true,  // Permet d'ajouter dynamiquement
-                'allow_delete' => true, // Permet de supprimer un créneau
+                'allow_add' => true, 
+                'allow_delete' => true, 
                 'by_reference' => false,
-                'prototype' => true, // Active le prototype pour JavaScript
+                'prototype' => true, 
             ])
         
     ->add('statutDisp', ChoiceType::class, [
@@ -45,8 +45,8 @@ class DisponibiliteType extends AbstractType
             'Disponible' => 'Disponible',
             'Indisponible' => 'Indisponible',
         ],
-        'expanded' => true,  // Affiche comme boutons radio (facultatif)
-        'multiple' => false, // Un seul choix possible
+        'expanded' => true,  
+        'multiple' => false,
     ])
 
             ->add('idMedecin', TextType::class, [
@@ -57,7 +57,7 @@ class DisponibiliteType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Ajouter',
-                'attr' => ['class' => 'btn btn-success d-none'], // Caché par défaut
+                'attr' => ['class' => 'btn btn-success d-none'], 
             ]);
     }
 
