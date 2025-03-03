@@ -1,0 +1,16 @@
+{% extends 'base3.html.twig' %}
+
+{% block main %}
+    <h1>Détails du Rendez-vous</h1>
+    
+    <div class="card shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h3>Rendez-vous avec {{ rendezVous.patient.nom }}</h3>
+            <p><strong>Date :</strong> {{ rendezVous.jour|date('d/m/Y') }}</p>
+            <p><strong>Heure :</strong> {{ rendezVous.heureString }}</p>
+            <p><strong>Motif :</strong> {{ rendezVous.motif }}</p>
+
+            <a href="{{ path('medecin_calendrier') }}" class="btn btn-primary">Retour au calendrier</a>
+        </div>
+    </div>
+{% endblock %}

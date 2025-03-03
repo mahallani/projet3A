@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Médecins{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Liste des Médecins</h1>
+    
+    <div class="row">
+        {% for medecin in medecins %}
+            <div class="col-md-4">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body text-center">
+                        <!-- Profile Icon -->
+                        <i class="fas fa-user-md fa-4x text-primary mb-3"></i>
+
+                        <h4 class="card-title">{{ medecin.nom }} {{ medecin.prenom }}</h4>
+
+                        <hr>
+
+                        <p><i class="fas fa-envelope me-2"></i> {{ medecin.email }}</p>
+                        <p><i class="fas fa-phone me-2"></i> {{ medecin.numtel }}</p>
+
+                        <!-- View Profile Button -->
+                        <a href="{{ path('medecin_profile', {id: medecin.id}) }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-user"></i> Voir Profil
+                        </a>
+
+                        <!-- Prendre un Rendez-vous Button -->
+                        <button class="btn btn-success btn-sm mt-2">
+                            <i class="fas fa-calendar-plus"></i> Prendre un rendez-vous
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="text-center text-muted">Aucun médecin trouvé.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

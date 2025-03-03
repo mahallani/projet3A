@@ -1,0 +1,42 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}New SuiviBebe{% endblock %}
+
+{% block body %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Nouveau Suivi Bébé</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_admin_index') }}">Accueil</a></li>
+          <li class="breadcrumb-item"><a href="{{ path('app_suivi_bebe_index') }}">Liste des Suivis Bébé</a></li>
+          <li class="breadcrumb-item active">Nouveau</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Créer un nouveau suivi pour le bébé</h5>
+
+              <!-- Include the Form -->
+              {{ include('suivi_bebe/_form.html.twig') }}
+
+              <!-- Redirection Buttons -->
+              <div class="text-end mt-3">
+                <a href="{{ path('app_suivi_bebe_indexback') }}" class="btn btn-secondary me-2">
+                  <i class="bi bi-arrow-left"></i> Retour à la liste
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}
+
+ 

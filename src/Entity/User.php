@@ -8,6 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\Security;
+
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -19,6 +27,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Email is required.')]
+    #[Assert\Email(
+    message: 'Please insert a valid email address.',
+    mode: 'strict'  // Ensures it follows RFC email validation rules
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -31,12 +44,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'This field is obligatory.')]
+    #[Assert\Regex(
+    pattern: "/^[a-zA-ZÀ-ÿ]+$/",
+    message: "Name should contain only characters."
+)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'This field is obligatory.')]
+    #[Assert\Regex(
+    pattern: "/^[a-zA-ZÀ-ÿ]+$/",
+    message: "Name should contain only characters."
+)]
     private ?string $prenom = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'This field is obligatory.')]
+    #[Assert\Regex(
+    pattern: "/^[0-9]{8}$/",
+    message: "Phone number must contain exactly 8 numbers."
+)] 
     private ?int $numtel = null;
 
    
@@ -50,8 +78,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $isVerified = null;
 
+    #[ORM\OneToMany(mappedBy: 'patient', targetEntity: SuiviGrossesse::class)]
+    private Collection $suivisGrossesse;
+    
+    #[ORM\OneToMany(mappedBy: 'patient', targetEntity: SuiviBebe::class)]
+    private Collection $suivisBebe;
 
+    /**
+     * @var Collection<int, Rendezvous>
+     */
+    #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'patient')]
+    private Collection $rendezvouses;
+    
 
+    public function __construct() {
+        $this->suivisGrossesse = new ArrayCollection();
+        $this->suivisBebe = new ArrayCollection();
+        $this->rendezvouses = new ArrayCollection();
+    }
+    
+    public function getSuivisGrossesse(): Collection {
+        return $this->suivisGrossesse;
+    }
+    
+    public function getSuivisBebe(): Collection {
+        return $this->suivisBebe;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -215,6 +267,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function __toString() {
         return(string) $this->id;
+    }
+
+    /**
+     * @return Collection<int, Rendezvous>
+     */
+    public function getRendezvouses(): Collection
+    {
+        return $this->rendezvouses;
+    }
+
+    public function addRendezvouse(Rendezvous $rendezvouse): static
+    {
+        if (!$this->rendezvouses->contains($rendezvouse)) {
+            $this->rendezvouses->add($rendezvouse);
+            $rendezvouse->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezvouse(Rendezvous $rendezvouse): static
+    {
+        if ($this->rendezvouses->removeElement($rendezvouse)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezvouse->getPatient() === $this) {
+                $rendezvouse->setPatient(null);
+            }
+        }
+
+        return $this;
     }
 
 }

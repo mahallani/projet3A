@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil du Médecin{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>{{ medecin.nom }} {{ medecin.prenom }}</h2>
+            <p>{{ medecin.specialite }}</p>
+        </div>
+        <div class="card-body">
+            <p><i class="fas fa-envelope me-2"></i> {{ medecin.email }}</p>
+            <p><i class="fas fa-phone me-2"></i> {{ medecin.numtel }}</p>
+            <p><i class="fas fa-globe me-2"></i> Nationalité: {{ medecin.nationalite }}</p>
+            
+            <button class="btn btn-success mt-3">
+                <i class="fas fa-calendar-plus"></i> Prendre un rendez-vous
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

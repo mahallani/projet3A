@@ -1,0 +1,97 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste SuiviGrossesse{% endblock %}
+
+{% block body %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Liste SuiviGrossesse</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_admin_index') }}">Accueil</a></li>
+          <li class="breadcrumb-item active">Suivi Grossesse</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Liste des Suivis de Grossesse</h5>
+
+              <!-- Search Bar -->
+              <form class="search-form d-flex align-items-center mb-3" method="GET" action="{{ path('app_suivi_grossesse_index') }}">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher un suivi..." value="{{ app.request.query.get('search') }}">
+                <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+              </form>
+
+              <!-- Suivi Grossesse Table -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Date Suivi</th>
+                    <th>Poids</th>
+                    <th>Tension</th>
+                    <th>Symptômes</th>
+                    <th>Etat de la grossesse</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for suivi_grossesse in suivi_grossesses %}
+                    <tr>
+                      <td>{{ suivi_grossesse.patient.nom }} {{ suivi_grossesse.patient.prenom }}</td>
+                      <td>{{ suivi_grossesse.DateSuivi ? suivi_grossesse.DateSuivi|date('d-m-Y') : '' }}</td>
+                      <td>{{ suivi_grossesse.Poids }} kg</td>
+                      <td>{{ suivi_grossesse.Tension }}</td>
+                      <td>{{ suivi_grossesse.Symptomes }}</td>
+                      <td>{{ suivi_grossesse.EtatGrossesse }}</td>
+                      <td class="action-buttons">
+                        <!-- Delete Button with Confirmation Modal -->
+                        <form action="{{ path('app_suivi_grossesse_delete', {'id': suivi_grossesse.id}) }}" method="POST" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer ce suivi de grossesse ?');">
+                          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ suivi_grossesse.id) }}">
+                          <button type="submit" class="btn btn-sm btn-danger" title="Supprimer">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </form>
+
+                        <!-- Edit Button -->
+                        <a href="{{ path('app_suivi_grossesse_edit', {'id': suivi_grossesse.id}) }}" class="btn btn-sm btn-warning" title="Modifier">
+                          <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <!-- Add Baby Button -->
+                        <a href="{{ path('app_suivi_bebe_new', {'suiviGrossesseId': suivi_grossesse.id}) }}" class="btn btn-sm btn-success" title="Ajouter un bébé">
+                          <i class="bi bi-plus-circle"></i>
+                          <i class="bi bi-person-fill"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  {% else %}
+                    <tr>
+                      <td colspan="7" class="text-center">Aucun suivi de grossesse trouvé.</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <!-- Redirection Buttons -->
+              <div class="text-end mt-3">
+                <a href="{{ path('app_suivi_grossesse_new') }}" class="btn btn-success me-2">
+                  <i class="bi bi-plus-circle"></i> Créer un nouveau suivi
+                </a>
+                <a href="{{ path('app_admin_index') }}" class="btn btn-secondary">
+                  <i class="bi bi-arrow-left"></i> Retour au tableau de bord
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}
+

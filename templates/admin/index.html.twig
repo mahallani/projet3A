@@ -1,0 +1,113 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}User Management{% endblock %}
+
+{% block body %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>User Management</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_admin_index') }}">Home</a></li>
+          <li class="breadcrumb-item active">Users</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Users List</h5>
+
+              <!-- Search Bar -->
+              <form class="search-form d-flex align-items-center mb-3" method="GET" action="{{ path('app_admin_index') }}">
+                <input type="text" name="search" class="form-control" placeholder="Search users..." value="{{ app.request.query.get('search') }}">
+                <button type="submit" class="btn btn-primary ms-2"><i class="bi bi-search"></i></button>
+              </form>
+
+              <!-- Users Table -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Nationality</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in users %}
+                    <tr>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.nom }} {{ user.prenom }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.numtel }}</td>
+                      <td>{{ user.Nationnalite }}</td>
+                      <td>
+                        {% if user.isVerified %}
+                          <span class="badge bg-success">Verified</span>
+                        {% else %}
+                          <span class="badge bg-warning">Not Verified</span>
+                        {% endif %}
+                        {% if user.isBanned %}
+                          <span class="badge bg-danger">Banned</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <a href="{{ path('app_admin_show', {'id': user.id}) }}" class="btn btn-sm btn-info" title="View">
+                          <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{{ path('app_admin_edit', {'id': user.id}) }}" class="btn btn-sm btn-warning" title="Edit">
+                          <i class="bi bi-pencil"></i>
+                        </a>
+                        <form action="{{ path('app_admin_delete', {'id': user.id}) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                          <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </form>
+                        {% if not user.isVerified %}
+                          <a href="{{ path('verify_user', {'id': user.id}) }}" class="btn btn-sm btn-success" title="Verify">
+                            <i class="bi bi-check-circle"></i>
+                          </a>
+                        {% endif %}
+                        {% if user.isBanned %}
+                          <a href="{{ path('app_admin_unbanu', {'id': user.id}) }}" class="btn btn-sm btn-secondary" title="Unban">
+                            <i class="bi bi-unlock"></i>
+                          </a>
+                        {% else %}
+                          <a href="{{ path('app_admin_banu', {'id': user.id}) }}" class="btn btn-sm btn-danger" title="Ban">
+                            <i class="bi bi-lock"></i>
+                          </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% else %}
+                    <tr>
+                      <td colspan="7" class="text-center">No users found.</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              <!-- Export PDF Button -->
+              <div class="text-end mt-3">
+                <a href="{{ path('app_admin_new') }}" class="btn btn-success me-2">
+                <i class="bi bi-person-plus"></i> Add New User
+                 </a>
+                <a href="{{ path('app_userPDF') }}" class="btn btn-primary">
+                  <i class="bi bi-file-earmark-pdf"></i> Export to PDF
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

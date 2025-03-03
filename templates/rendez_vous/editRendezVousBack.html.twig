@@ -1,0 +1,151 @@
+{% extends 'base3.html.twig' %}
+
+{% block title %}Modifier une Disponibilité{% endblock %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded">
+        <div class="card-header bg-warning text-white text-center">
+            <h2><i class="fas fa-edit"></i> Modifier le rendez-vous</h2>
+        </div>
+        <div class="card-body p-4">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            <!-- Sélection du Médecin -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-user-md"></i> Médecin</label>
+                {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
+                     <div class="text-danger">
+        {{ form_errors(form.idMedecin) }}
+         </div>
+            </div>
+       
+
+            <!-- Sélection du Jour -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour</label>
+                {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
+                    <div class="text-danger">
+        {{ form_errors(form.jour) }}
+         </div>
+
+            </div>
+        
+<!-- Sélection de l'Heure -->
+<div class="d-flex justify-content-center">
+    <div class="mb-3 text-center">
+        <label class="form-label fw-bold"><i class="fas fa-clock"></i> Sélectionnez une heure</label>
+        <div class="input-group mx-auto" style="width: 250px;">
+            <span class="input-group-text bg-light"><i class="fas fa-clock"></i></span>
+            <select id="heureString_select" name="heureString" class="form-select">
+                <!-- Affichage de l'heure actuellement sélectionnée -->
+                <option value="{{ ancienneHeure }}" selected>{{ ancienneHeure }}</option>
+
+                <!-- Affichage des autres heures disponibles -->
+                {% for heure in heuresDisponibles %}
+                    {% if heure != ancienneHeure %}
+                        <option value="{{ heure }}">{{ heure }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+            <!-- Motif du Rendez-vous -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
+                {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
+                      <div class="text-danger">
+        {{ form_errors(form.jour) }}
+         </div>
+            </div>
+      
+
+            <!-- Symptômes -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-thermometer-half"></i> Symptômes</label>
+                {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
+                          <div class="text-danger">
+        {{ form_errors(form.symptomes) }}
+         </div>
+            </div>
+  
+
+            <!-- Traitement en cours -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
+                {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+        {{ form_errors(form.traitementEnCours) }}
+         </div>
+            </div>
+    
+
+            <!-- Notes -->
+            <div class="mb-3">
+                <label class="form-label fw-bold"><i class="fas fa-sticky-note"></i> Notes</label>
+                {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            
+
+
+            <!-- Bouton Modifier -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Modifier</button>
+                <a href="{{ path('app_rendezvous_listBack') }}" class="btn btn-secondary px-4"><i class="fas fa-arrow-left"></i> Retour</a>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    function loadAvailableTimes() {
+        let medecinId = $('#rendez_vous_idMedecin').val();
+        let jour = $('#rendez_vous_jour').val();
+        
+        if (medecinId && jour) {
+            $.ajax({
+                url: `/rendezvous/getAvailableTimes/${medecinId}/${encodeURIComponent(jour)}`,
+                type: 'GET',
+                success: function (response) {
+                    let select = $('#heureString_select');
+                    select.empty(); 
+                    select.append(new Option('-- Sélectionnez une heure --', ''));
+
+                    if (response.length > 0) {
+                        response.forEach(function (time) {
+                            select.append(new Option(time, time));
+                        });
+                    } else {
+                        select.append(new Option('Aucune disponibilité', ''));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX :", status, error);
+                }
+            });
+        }
+    }
+
+   
+    $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
+
+  
+    $('#heureString_select').change(function () {
+        $('#rendez_vous_heureString').val($(this).val());
+    });
+});
+
+</script>
+{% endblock %}
+{% endblock %}
+

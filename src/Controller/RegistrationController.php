@@ -20,6 +20,9 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Mailer\Bridge\Google\Transport\GmailSmtpTransport;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class RegistrationController extends AbstractController
 {
@@ -44,7 +47,8 @@ final class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email        
-        
+            return $this->redirectToRoute('app_main');
+
         }
        
     return $this->render('registration/register.html.twig', [
@@ -106,5 +110,33 @@ public function deleteAccount(EntityManagerInterface $entityManager, SessionInte
 
     return $this->redirectToRoute('app_main');
 }
-   
+#[Route('/registration/home', name: 'registration_home')]
+public function home(EntityManagerInterface $entityManager): Response
+{
+    $medecins = $entityManager->getRepository(User::class)->createQueryBuilder('u')
+        ->where('u.roles LIKE :role')
+        ->setParameter('role', '%ROLE_MEDECIN%')
+        ->getQuery()
+        ->getResult();
+
+    return $this->render('registration/home.html.twig', [
+        'medecins' => $medecins,
+    ]);
+}
+#[Route('/medecin/profile', name: 'medecin_profile')]
+public function dashboard(Security $security): Response
+{
+    // Get the logged-in user
+    $user = $security->getUser();
+
+    // Check if the user is a doctor (medecin)
+    if (!$user || !in_array('ROLE_MEDECIN', $user->getRoles())) {
+        throw $this->createAccessDeniedException('Access Denied');
+    }
+
+    // Render the dashboard for the logged-in doctor
+    return $this->render('medecin/profile.html.twig', [
+        'medecin' => $user,
+    ]);
+}
 }

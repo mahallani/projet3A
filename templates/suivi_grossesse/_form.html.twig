@@ -1,0 +1,204 @@
+<style>
+    /* Conteneur principal du formulaire */
+    .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #ffffff; /* Fond blanc */
+        border-radius: 10px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Ombre douce */
+        border: 1px solid #e0e0e0; /* Bordure gris clair */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police moderne */
+    }
+
+    /* En-tête du formulaire */
+    .form-container h2 {
+        text-align: center;
+        font-size: 24px;
+        color: #007bff; /* Bleu pour le titre */
+        margin-bottom: 20px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Groupes de champs de formulaire */
+    .form-group {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9; /* Fond léger gris */
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Ombre légère */
+    }
+
+    /* Labels des champs */
+    .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Champs de saisie (inputs, textarea, etc.) */
+    .form-input, .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f4f7fb; /* Fond bleu clair */
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Focus sur les champs */
+    .form-input:focus, .form-control:focus {
+        border-color: #007bff; /* Bleu pour le focus */
+        background-color: #eaf1ff; /* Légère teinte bleue */
+        outline: none;
+    }
+
+    /* Bouton de soumission */
+    .btn-submit {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #007bff; /* Bleu */
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px; /* Bord arrondi */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Effet au survol du bouton */
+    .btn-submit:hover {
+        background-color: #0056b3; /* Bleu plus foncé */
+        transform: translateY(-2px); /* Effet de soulèvement */
+    }
+
+    /* Erreurs de validation */
+    .form-error {
+        color: #ff4d4d;
+        font-size: 14px;
+        margin-top: 5px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Groupes d'input (applicable pour les champs comme poids) */
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-group .input-group-text {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 4px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .input-group .form-control {
+        border-radius: 4px 0 0 4px;
+    }
+    /* Bouton Back to List */
+    .btn-back-to-list {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #f4f4f9; /* Fond léger */
+        color: #007bff; /* Bleu clair pour la couleur du texte */
+        font-size: 18px;
+        border: 1px solid #007bff; /* Bordure bleu clair */
+        border-radius: 30px; /* Bord arrondi */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police élégante */
+        text-decoration: none; /* Enlever la sous-ligne si c'est un lien */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Effet au survol du bouton */
+    .btn-back-to-list:hover {
+        background-color: #007bff; /* Fond bleu clair au survol */
+        color: white; /* Texte blanc au survol */
+        transform: translateY(-2px); /* Effet de soulèvement */
+    }
+
+    /* Icône avant le texte (si nécessaire) */
+    .btn-back-to-list .icon {
+        margin-right: 10px;
+        font-size: 20px;
+    }
+    /* Style pour le titre "Create new SuiviGrossesse" */
+.title-new-suivi {
+    text-align: center;  /* Centre le titre */
+    color: #007bff;      /* Couleur bleu */
+    font-family: 'Arial', sans-serif; /* Police différente */
+    font-size: 32px;     /* Taille de police plus grande */
+    font-weight: bold;   /* Texte en gras */
+    margin-bottom: 20px; /* Espacement sous le titre */
+}
+
+</style>
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="form-container">
+    <h2>Suivi de Grossesse</h2>
+    <div class="form-group">
+        {{ form_label(form.dateSuivi, 'Date de suivi') }}
+        {{ form_widget(form.dateSuivi, {'attr': {'class': 'form-input', 'type': 'date', 'max': "now"|date('Y-m-d')}}) }}
+        <div class="form-error">{{ form_errors(form.dateSuivi) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.poids) }}
+        <div class="input-group">
+            {{ form_widget(form.poids, {'attr': {'class': 'form-control', 'min': '30', 'max': '200', 'step': '0.1', 'required': 'required'}}) }}
+            <div class="input-group-append">
+                <span class="input-group-text">kg</span>
+            </div>
+        </div>
+        <div class="form-error">{{ form_errors(form.poids) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.tension, 'Tension') }}
+        {{ form_widget(form.tension, {'attr': {'class': 'form-input', 'type': 'number', 'step': '0.1', 'min': '6', 'max': '20', 'required': 'required'}}) }}
+        <div class="form-error">{{ form_errors(form.tension) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.symptomes) }}
+        {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
+        <div class="form-error">{{ form_errors(form.symptomes) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.etatGrossesse, 'État de grossesse') }}
+        {{ form_widget(form.etatGrossesse, {'attr': {'class': 'form-input'}}) }}
+        <div class="form-error">{{ form_errors(form.etatGrossesse) }}</div>
+    </div>
+<div class="form-group">
+    {{ form_label(form.patient, 'Patient') }}
+    {{ form_widget(form.patient, {'attr': {'class': 'form-input'}}) }}
+    <div class="form-error">{{ form_errors(form.patient) }}</div>
+</div>
+
+    <button class="btn btn-submit">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    let dateInput = document.querySelector("input[name='suivi_grossesse[dateSuivi]']");
+    let now = new Date();
+    now.setDate(now.getDate() - 1); // Date d'hier
+    let formattedDate = now.toISOString().slice(0, 10); // Récupère uniquement la partie date (YYYY-MM-DD)
+    dateInput.setAttribute("max", formattedDate);
+});
+</script>

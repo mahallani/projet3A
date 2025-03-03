@@ -1,0 +1,38 @@
+{% extends 'base3.html.twig' %}
+
+{% block title %}Modifier une Disponibilité{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Modifier la Disponibilité</h1>
+
+    <div class="card shadow p-4">
+        {{ form_start(form) }}
+        
+        <div class="mb-3">
+            {{ form_label(form.jour, 'Jour', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.jour, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.heuresDisp, 'Heures Disponibles', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.heuresDisp, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.statutDisp, 'Statut', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.statutDisp, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.idMedecin, 'ID Médecin', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.idMedecin, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Modifier</button>
+        <a href="{{ path('app_disponibilite_listBack') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

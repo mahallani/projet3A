@@ -1,0 +1,47 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}SuiviGrossesse{% endblock %}
+
+{% block body %}
+    <h1>SuiviGrossesse</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suivi_grossesse.id }}</td>
+            </tr>
+            <tr>
+                <th>DateSuivi</th>
+                <td>{{ suivi_grossesse.DateSuivi ? suivi_grossesse.DateSuivi|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Poids</th>
+                <td>{{ suivi_grossesse.Poids }}</td>
+            </tr>
+            <tr>
+                <th>Tension</th>
+                <td>{{ suivi_grossesse.Tension }}</td>
+            </tr>
+            <tr>
+                <th>Symptomes</th>
+                <td>{{ suivi_grossesse.Symptomes }}</td>
+            </tr>
+            <tr>
+                <th>EtatGrossesse</th>
+                <td>{{ suivi_grossesse.EtatGrossesse }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_suivi_grossesse_new') }}">Create new Suivi Grossesse</a>
+
+    <a href="{{ path('app_suivi_grossesse_indexback') }}">back to list</a>
+
+    <a href="{{ path('app_suivi_grossesse_edit', {'id': suiviGrossesse.id}) }}">edit</a>
+    
+
+   
+
+
+    {{ include('suivi_grossesse/_delete_form.html.twig') }}
+{% endblock %}

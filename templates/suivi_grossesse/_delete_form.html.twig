@@ -1,0 +1,26 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Edit SuiviGrossesse{% endblock %}
+
+{% block main %}
+    <h1>Delete SuiviGrossesse</h1>
+
+   <!-- Formulaire de suppression caché -->
+ <form action="{{ path('app_suivi_grossesse_delete_confirm', {'id': suivi_grossesse.id}) }}" method="POST" onsubmit="return confirmDelete()">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+
+<script>
+    // Fonction de confirmation de suppression
+    function confirmDelete(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce suivi de grossesse ?")) {
+            // Si l'utilisateur confirme, remplir le formulaire et l'envoyer
+            document.getElementById("deleteId").value = id;
+            document.getElementById("deleteForm").action = '/suivi/grossesse/' + id + '/delete'; // URL pour la suppression
+            document.getElementById("deleteForm").submit(); // Soumettre le formulaire
+        }
+    }
+</script>
+
+</form>
+{% endblock %} 

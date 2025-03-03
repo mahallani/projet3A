@@ -1,0 +1,74 @@
+{% extends 'base3.html.twig' %}
+
+{% block title %} Liste des Rendez-Vous {% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">📅 Liste des Rendez-Vous</h1>
+
+   <div class="d-flex justify-content-center">
+    <table class="table table-bordered table-striped text-center">
+
+
+        <thead class="table-dark">
+            <tr>
+                <th>Motif</th>
+                <th>Symptômes</th>
+                <th>Traitement en cours</th>
+                <th>Notes</th>
+                <th>Statut</th>
+                <th>Jour</th>
+                <th>Heure</th>
+                <th>Medecin</th>
+                <th>Patient</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rendezVous in rendezVousList %}
+            <tr>
+                <td>{{ rendezVous.motif }}</td>
+                <td>{{ rendezVous.symptomes }}</td>
+                <td>{{ rendezVous.traitementEnCours }}</td>
+                <td>{{ rendezVous.notes }}</td>
+                <td>
+                    {% if rendezVous.statutRendezVous == 'Confirmé' %}
+                        <span class="badge bg-success">✅ Confirmé</span>
+                    {% elseif rendezVous.statutRendezVous == 'Annulé' %}
+                        <span class="badge bg-danger">❌ Annulé</span>
+                    {% else %}
+                        <span class="badge bg-warning">⏳ En attente</span>
+                    {% endif %}
+                </td>
+                <td>{{ rendezVous.jour|date('d/m/Y') }}</td>
+                <td>{{ rendezVous.heureString }}</td>
+                <td>{{ rendezVous.heureR.idMedecin.nom }}</td>
+                 <td>{{ rendezVous.patient.nom }}</td>
+ <td class="d-flex justify-content-center">
+    <a href="{{ path('app_rendezvous_editBack', { 'id': rendezVous.id }) }}" 
+       class="btn btn-warning btn-sm mx-1"
+       style="padding: 3px 8px; font-size: 12px; background-color: yellow; border-color: yellow; color: black;">
+       ✏️ Edit
+    </a>
+    
+    <a href="{{ path('app_rendezvous_deleteBack', { 'id': rendezVous.id }) }}" 
+       class="btn btn-danger btn-sm mx-1" 
+       style="padding: 3px 8px; font-size: 12px; background-color: red; border-color: red; color: white;"
+       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette disponibilité ?');">
+       🗑️ Delete
+    </a>
+</td>
+
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" class="text-center text-muted">Aucun rendez-vous trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}New User - Baby Steps{% endblock %}
+
+{% block body %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Create New User</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ path('app_admin_index') }}">Users</a></li>
+          <li class="breadcrumb-item active">New User</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">User Information</h5>
+
+              {{ form_start(form, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                <!-- First Name -->
+                <div class="col-md-6">
+                  {{ form_label(form.Nom, 'First Name', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Enter first name'}}) }}
+                  <div class="invalid-feedback">
+                    Please provide a valid first name.
+                  </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="col-md-6">
+                  {{ form_label(form.Prenom, 'Last Name', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Enter last name'}}) }}
+                  <div class="invalid-feedback">
+                    Please provide a valid last name.
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                  {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter email'}}) }}
+                  <div class="invalid-feedback">
+                    Please provide a valid email address.
+                  </div>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="col-md-6">
+                  {{ form_label(form.Numtel, 'Phone Number', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.Numtel, {'attr': {'class': 'form-control', 'placeholder': 'Enter phone number'}}) }}
+                  <div class="invalid-feedback">
+                    Please provide a valid phone number.
+                  </div>
+                </div>
+
+                <!-- Nationality -->
+                <div class="col-md-6">
+                  {{ form_label(form.Nationnalite, 'Nationality', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.Nationnalite, {'attr': {'class': 'form-control'}}) }}
+                  <div class="invalid-feedback">
+                    Please select a nationality.
+                  </div>
+                </div>
+
+                <!-- Password -->
+                <div class="col-md-6">
+                  {{ form_label(form.plainPassword, 'Password', {'label_attr': {'class': 'form-label'}}) }}
+                  {{ form_widget(form.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Enter a strong password'}}) }}
+                  <div class="invalid-feedback">
+                    Your password must be at least 12 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save me-2"></i> Create User
+                  </button>
+                  <a href="{{ path('app_admin_index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-2"></i> Cancel
+                  </a>
+                </div>
+
+              {{ form_end(form) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}

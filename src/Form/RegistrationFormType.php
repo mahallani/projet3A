@@ -71,23 +71,21 @@ class RegistrationFormType extends AbstractType
                 // This field is not mapped directly to the entity
                 'mapped' => false,
                 
-                // HTML attributes for better UX and security
                 'attr' => [
                     'autocomplete' => 'new-password', // Disable autocomplete
-                    'class' => 'form-control', // Bootstrap class for styling
-                    'placeholder' => 'Enter a strong password', // Placeholder text
-                    'aria-label' => 'Password', // Accessibility improvement
+                    'class' => 'form-control', 
+                    'placeholder' => 'Enter a strong password', 
+                    'aria-label' => 'Password',
                 ],
                 
-                // Validation constraints for stronger passwords
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password.',
                     ]),
                     new Length([
-                        'min' => 12, // Increased minimum length for better security
-                        'minMessage' => 'Your password should be at least {{ limit }} characters long.',
-                        'max' => 4096, // Maximum length allowed by Symfony
+                        'min' => 12, 
+                        'minMessage' => 'Your password should be at least {{ 12 }} characters long.',
+                        'max' => "30", 
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/',
@@ -95,7 +93,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 
-                // Label and help text for better user guidance
                 'label' => 'Password:',
                 'help' => 'Your password must be at least 12 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
                 

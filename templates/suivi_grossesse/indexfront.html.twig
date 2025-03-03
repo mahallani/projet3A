@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Suivi Grossesse{% endblock %}
+
+{% block body %}
+    <div class="pagetitle">
+        <h1>Liste Suivi Grossesse</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Accueil</a></li>
+                <li class="breadcrumb-item active">Liste Suivi Grossesse</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Liste des suivis de grossesse</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                <th>Patient</th>
+                <th>Date Suivi</th>
+                <th>Poids</th>
+                <th>Tension</th>
+                <th>Symptômes</th>
+                <th>Etat de la grossesse</th>
+                <th>Suivi du Bébé</th>
+               
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  {% for suivi_grossesse in suivi_grossesses %}
+    <tr>
+        <td>{{ suivi_grossesse.patient.nom }} {{ suivi_grossesse.patient.prenom }}</td>
+        <td>{{ suivi_grossesse.DateSuivi ? suivi_grossesse.DateSuivi|date('d-m-Y') : '' }}</td>
+        <td>{{ suivi_grossesse.Poids }} kg</td>
+        <td>{{ suivi_grossesse.Tension }}</td>
+        <td>{{ suivi_grossesse.Symptomes }}</td>
+        <td>{{ suivi_grossesse.EtatGrossesse }}</td>
+        <td>
+            <a href="{{ path('app_suivi_bebe_index', {'suiviGrossesseId': suivi_grossesse.id}) }}">Suivi Bébé</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="7" class="text-center">Aucun enregistrement trouvé.</td>
+    </tr>
+{% endfor %}
+       
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

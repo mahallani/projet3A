@@ -1,0 +1,108 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Edit SuiviGrossesse{% endblock %}
+
+{% block body %}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Modifier Suivi Grossesse</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ path('app_admin_index') }}">Accueil</a></li>
+          <li class="breadcrumb-item"><a href="{{ path('app_suivi_grossesse_indexback') }}">Liste des Suivis</a></li>
+          <li class="breadcrumb-item active">Modifier</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Modifier les détails du suivi de grossesse</h5>
+
+              <!-- Include the Form -->
+              {{ include('suivi_grossesse/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+              <!-- Redirection Buttons -->
+              <div class="text-end mt-3">
+                <a href="{{ path('app_suivi_grossesse_indexback') }}" class="btn btn-secondary me-2">
+                  <i class="bi bi-arrow-left"></i> Retour à la liste
+                </a>
+                {{ include('suivi_grossesse/_delete_form.html.twig') }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    /* Custom Styles */
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+      transform: translateY(-2px);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+  </style>
+{% endblock %}

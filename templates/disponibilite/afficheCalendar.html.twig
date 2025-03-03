@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier des Disponibilités</title>
+    
+    <!-- ✅ Styles FullCalendar -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Calendrier des Disponibilités</h1>
+
+    <div id="calendar"></div>
+
+    <!-- ✅ Scripts FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let calendarEl = document.getElementById('calendar');
+
+            let calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek', // Vue semaine avec horaires
+                timeZone: 'UTC',
+                locale: 'fr', // Affichage en français
+                slotMinTime: "08:00:00", // Début de l'affichage des créneaux
+                slotMaxTime: "20:00:00", // Fin de l'affichage des créneaux
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay' 
+                },
+                events: '{{ path("app_disponibilite_calendar") }}', // Chargement AJAX des disponibilités
+                eventTimeFormat: { 
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+
+</body>
+</html>

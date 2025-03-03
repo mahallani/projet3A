@@ -1,0 +1,46 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}SuiviBebe{% endblock %}
+
+{% block body %}
+    <h1>SuiviBebe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suivi_bebe.id }}</td>
+            </tr>
+            <tr>
+                <th>DateSuivi</th>
+                <td>{{ suivi_bebe.DateSuivi ? suivi_bebe.DateSuivi|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PoidsBebe</th>
+                <td>{{ suivi_bebe.PoidsBebe }}</td>
+            </tr>
+            <tr>
+                <th>TailleBebe</th>
+                <td>{{ suivi_bebe.tailleBebe }}</td>
+            </tr>
+            <tr>
+                <th>EtatSante</th>
+                <td>{{ suivi_bebe.EtatSante }}</td>
+            </tr>
+             <tr>
+                <th>appetitbebe</th>
+                <td>{{ suivi_bebe.appetitbebe }}</td>
+            </tr>
+            <tr>
+                <th>BattementCoeur</th>
+                <td>{{ suivi_bebe.BattementCoeur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_suivi_bebe_indexback') }}">back to list</a>
+
+    <a href="{{ path('app_suivi_bebe_edit', {'id': suivi_bebe.id}) }}">edit</a>
+
+    {{ include('suivi_bebe/_delete_form.html.twig') }}
+{% endblock %}

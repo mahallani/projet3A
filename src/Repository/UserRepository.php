@@ -18,10 +18,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         parent::__construct($registry, User::class);
     }
+    public function searchUsers(?string $query): array
+    {
+        $qb = $this->createQueryBuilder('u');
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
+        if ($query) {
+            $qb->andWhere('u.nom LIKE :query OR u.prenom LIKE :query OR u.email LIKE :query')
+                ->setParameter('query', '%' . $query . '%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
