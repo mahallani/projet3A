@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ordonnance #{{ ordonnance.id }}</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2C3E50;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2C3E50;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #7F8C8D;
+        }
+
+        /* Ordonnance Details Section */
+        .ordonnance-details {
+            margin: 20px 0;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #BDC3C7;
+        }
+
+        .ordonnance-details h2 {
+            font-size: 20px;
+            color: #34495E;
+            margin-bottom: 15px;
+        }
+
+        .ordonnance-details p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #555555;
+        }
+
+        .ordonnance-details p strong {
+            color: #2C3E50;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: right;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #7F8C8D;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* Page Numbers */
+        .page-number {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #7F8C8D;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Ordonnance Médicale</h1>
+        <p>Date: {{ ordonnance.datePrescription|date('d/m/Y') }}</p>
+    </div>
+
+    <!-- Ordonnance Details Section -->
+    <div class="ordonnance-details">
+        <h2>Détails de l'ordonnance</h2>
+        <p><strong>Médicament:</strong> {{ ordonnance.medicament }}</p>
+        <p><strong>Posologie:</strong> {{ ordonnance.posologie }}</p>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>Signature du médecin</p>
+        <p>_________________</p>
+    </div>
+
+    <!-- Page Number Section -->
+    <div class="page-number">
+        Page {{ page_num }}
+    </div>
+</body>
+</html>

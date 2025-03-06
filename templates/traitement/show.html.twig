@@ -1,0 +1,53 @@
+{% extends 'navbar_base.html.twig' %}
+
+{% block title %}{{ 'Treatment Details'|trans }}{% endblock %}
+
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">{{ 'Treatment Details'|trans }}</h1>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light" style="width: 30%">{{ 'ID'|trans }}</th>
+                                    <td>{{ traitement.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.datePrescription }}</th>
+                                    <td>{{ traitement.datePrescription ? traitement.datePrescription|date('Y-m-d') : 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.historiqueTraitement }}</th>
+                                    <td>{{ traitement.historiqueTraitement }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.ordonnance }}</th>
+                                    <td>{{ traitement.ordonnance.id }}</td> {# Or any other property of Ordonnance you want to display #}
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4">
+                            <form class="d-flex gap-2">
+                                <a href="{{ path('app_traitement_index') }}" class="btn btn-secondary flex-grow-1">{{ 'Back to List'|trans }}</a>
+                                <a href="{{ path('app_traitement_edit', {'id': traitement.id}) }}" class="btn btn-warning flex-grow-1">{{ 'Edit'|trans }}</a>
+                                {{ include('traitement/_delete_form.html.twig') }}
+                                <a href="{{ path('app_traitement_pdf', {'id': traitement.id}) }}" 
+                                   class="btn btn-primary flex-grow-1" 
+                                   target="_blank">
+                                    {{ 'Generate PDF'|trans }}
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

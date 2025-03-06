@@ -1,0 +1,55 @@
+{% extends 'navbar_base.html.twig' %}
+
+{% block title %}{{ 'Prescription Details'|trans }}{% endblock %}
+
+{# Block the slider #}
+{% block slider %}{% endblock %}
+
+{# Block the main content of the homepage #}
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">{{ 'Prescription Details'|trans }}</h1>
+
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light" style="width: 30%">{{ 'ID'|trans }}</th>
+                                    <td>{{ ordonnance.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.medicament }}</th>
+                                    <td>{{ ordonnance.medicament }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.posologie }}</th>
+                                    <td>{{ ordonnance.posologie }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">{{ translatedLabels.date_prescription }}</th>
+                                    <td>{{ ordonnance.datePrescription ? ordonnance.datePrescription|date('Y-m-d') : 'N/A' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4">
+                            <form class="d-flex gap-2">
+                                <a href="{{ path('app_ordonnance_index') }}" class="btn btn-secondary btn-sm flex-grow-1">{{ 'Back to List'|trans }}</a>
+                                <a href="{{ path('app_ordonnance_edit', {'id': ordonnance.id}) }}" class="btn btn-warning btn-sm flex-grow-1">{{ 'Edit'|trans }}</a>
+                                {{ include('ordonnance/_delete_form.html.twig') }}
+                                <a href="{{ path('app_ordonnance_pdf', {'id': ordonnance.id}) }}" 
+                                   class="btn btn-primary btn-sm flex-grow-1" 
+                                   target="_blank">
+                                    {{ 'Generate PDF'|trans }}
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}BabySteps{% endblock %}</title>
+    <link rel="icon" href="{{ asset('assets/frontoffice/img/babyconn.png') }}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/frontoffice/css/bootstrap.min.css') }}">
+        <style>
+            /* Custom Styles */
+            body {
+                background-color: #e6f0ff; /* Soft, faded blue background */
+                margin: 0;
+                padding: 0;
+                font-family: 'Poppins', sans-serif;
+            }
+            .navbar {
+                background-color: #ffffff; /* White navbar */
+                color: #000000; /* Black text for contrast */
+                padding: 10px 0;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for navbar */
+            }
+            .navbar a {
+                color: #000000; /* Black text for links */
+                text-decoration: none;
+                margin: 0 15px;
+            }
+            .navbar a:hover {
+                color: #007bff; /* Blue hover effect */
+            }
+            .form-container {
+                background-color: #ffffff; /* White background for the form */
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin: 20px auto;
+                max-width: 800px;
+            }
+            .form-container h1 {
+                color: #007bff; /* Blue title */
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+            .form-control {
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                margin-bottom: 15px;
+            }
+            .form-control:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+            .btn-primary {
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+            .btn-primary:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+            .btn-secondary {
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #545b62;
+            }
+            /* Language Switcher Styles */
+            .language-switcher {
+                position: relative;
+                display: inline-block;
+            }
+            .language-switcher select {
+                background-color: transparent;
+                border: none;
+                color: #000000;
+                font-size: 16px;
+                padding: 5px;
+                cursor: pointer;
+            }
+            .language-switcher select:focus {
+                outline: none;
+            }
+        </style>
+    {% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="{{ asset('assets/frontoffice/img/logoo1.png') }}" alt="Logo" width="100" height="100">
+            </div>
+            <div class="navbar-links">
+                <a href="#">Home</a>
+                <a href="#">Doctors</a>
+                <a href="#">Medical Records</a>
+                <a href="#">Blog & Advice</a>
+                <a href="#">Get Appointment</a>
+                <a href="#">Prescription</a>
+                <a href="#">Room Reservation</a>
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+    <form action="{{ path('change_locale') }}" method="post">
+        <select name="locale" onchange="this.form.submit()">
+            <option value="en" {{ app.request.locale == 'en' ? 'selected' : '' }}>English</option>
+            <option value="fr" {{ app.request.locale == 'fr' ? 'selected' : '' }}>Français</option>
+        </select>
+        <input type="hidden" name="_token" value="{{ csrf_token('change_locale') }}">
+    </form>
+</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    {% block javascripts %}
+        <script src="{{ asset('assets/frontoffice/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/frontoffice/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'navbar_base.html.twig' %}
+
+{% block title %}{{ 'Edit Prescription'|trans }}{% endblock %}
+
+{# Block the slider #}
+{% block slider %}{% endblock %}
+
+{# Block the main content of the homepage #}
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">{{ 'Edit Prescription'|trans }}</h1>
+
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                            <div class="mb-3">
+                                {{ form_label(form.medicament, translatedLabels.medicament) }}
+                                {{ form_widget(form.medicament, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.medicament) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.posologie, translatedLabels.posologie) }}
+                                {{ form_widget(form.posologie, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.posologie) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.date_prescription, translatedLabels.date_prescription) }}
+                                {{ form_widget(form.date_prescription, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.date_prescription) }}
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary">{{ 'Update'|trans }}</button>
+                                <a href="{{ path('app_ordonnance_index') }}" class="btn btn-secondary">{{ 'Back to List'|trans }}</a>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

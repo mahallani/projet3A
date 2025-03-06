@@ -1,0 +1,31 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Medication</th>
+            <th>Dosage</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ordonnance in ordonnances %}
+            <tr>
+                <td>{{ ordonnance.id }}</td>
+                <td>{{ ordonnance.medicament }}</td>
+                <td>{{ ordonnance.posologie }}</td>
+                <td>{{ ordonnance.datePrescription|date('Y-m-d') }}</td>
+                <td>
+                    <a href="{{ path('app_ordonnance_pdf', {'id': ordonnance.id}) }}" class="btn btn-secondary btn-sm">
+                        Generate PDF
+                    </a>
+                    <a href="{{ path('app_ordonnance_edit', {'id': ordonnance.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form method="post" action="{{ path('app_ordonnance_delete', {'id': ordonnance.id}) }}" onsubmit="return confirm('Are you sure?');" class="d-inline">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ordonnance.id) }}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

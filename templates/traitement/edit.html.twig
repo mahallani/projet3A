@@ -1,0 +1,44 @@
+{% extends 'navbar_base.html.twig' %}
+
+{% block title %}{{ 'Edit Treatment'|trans }}{% endblock %}
+
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">{{ 'Edit Treatment'|trans }}</h1>
+
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                            <div class="mb-3">
+                                {{ form_label(form.datePrescription, translatedLabels.datePrescription) }}
+                                {{ form_widget(form.datePrescription, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.datePrescription) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.historiqueTraitement, translatedLabels.historiqueTraitement) }}
+                                {{ form_widget(form.historiqueTraitement, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.historiqueTraitement) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(form.ordonnance, translatedLabels.ordonnance) }}
+                                {{ form_widget(form.ordonnance, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.ordonnance) }}
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary">{{ 'Update'|trans }}</button>
+                                <a href="{{ path('app_traitement_index') }}" class="btn btn-secondary">{{ 'Back to List'|trans }}</a>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

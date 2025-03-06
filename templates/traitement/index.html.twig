@@ -1,0 +1,89 @@
+{% extends 'navbar_base.html.twig' %}
+
+{% block title %}Traitements{% endblock %}
+
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 mb-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title mb-4">{{ 'List of Traitements'|trans }}</h1>
+
+                <a href="{{ path('app_traitement_new') }}" class="btn btn-success mb-3">{{ 'Create New Traitement'|trans }}</a>
+
+                {# Search Form #}
+                <form method="get" action="{{ path('app_traitement_search') }}" class="mb-3">
+                    <div class="input-group">
+                        <input type="number" name="id" class="form-control" value="{{ searchId|default('') }}" placeholder="{{ 'Search by ID'|trans }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">{{ 'Search'|trans }}</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>
+                                    <a href="{{ path('app_traitement_index', {'sort': 'datePrescription', 'direction': direction == 'asc' ? 'desc' : 'asc'}) }}">
+                                        {{ translatedLabels.datePrescription }}
+                                    </a>
+                                </th>
+                                <th>{{ translatedLabels.historiqueTraitement }}</th>
+                                <th>{{ translatedLabels.ordonnance }}</th>
+                                <th>{{ 'Actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for traitement in pagination %}
+                            <tr>
+                                <td>{{ traitement.id }}</td>
+                                <td>{{ traitement.datePrescription ? traitement.datePrescription|date('Y-m-d') : 'N/A' }}</td>
+                                <td>{{ traitement.historiqueTraitement }}</td>
+                                <td>{{ traitement.ordonnance ? traitement.ordonnance.id : 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ path('app_traitement_show', {'id': traitement.id}) }}" class="btn btn-info btn-sm">{{ 'Show'|trans }}</a>
+                                    <a href="{{ path('app_traitement_edit', {'id': traitement.id}) }}" class="btn btn-warning btn-sm">{{ 'Edit'|trans }}</a>
+                                    <form method="post" action="{{ path('app_traitement_delete', {'id': traitement.id}) }}" onsubmit="return confirm('{{ 'Are you sure?'|trans }}');" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ traitement.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">{{ 'Delete'|trans }}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">{{ 'No traitements found'|trans }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {# Pagination Navigation with Jump to Page #}
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+
+                    {# Jump to page input #}
+                    <div>
+                        <form class="form-inline" method="get" action="{{ path(app.request.attributes.get('_route')) }}">
+                            {# Preserve search filters #}
+                            <input type="hidden" name="id" value="{{ searchId }}">
+
+                            <label for="jump-to-page" class="mr-2">{{ 'Jump to page'|trans }}</label>
+                            <input type="number" id="jump-to-page" name="page" min="1" 
+                                   max="{{ (pagination.getTotalItemCount() // pagination.getItemNumberPerPage()) + 1 }}" 
+                                   class="form-control" placeholder="{{ 'Page number'|trans }}" style="width: 100px;">
+                            <button type="submit" class="btn btn-primary ml-2">{{ 'Go'|trans }}</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
