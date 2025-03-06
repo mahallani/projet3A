@@ -1,0 +1,67 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Commentaire index{% endblock %}
+
+{% block body %}
+    <h1>Commentaire index</h1>
+     {# Formulaire de recherche #}
+    <form method="get" action="{{ path('app_commentaire_search') }}" class="mb-3">
+        <div class="input-group">
+            <input type="number" name="id" class="form-control" value="{{ searchId|default('') }}" placeholder="Search by ID">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">{{ 'Search'|trans }}</button>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Commentaire</th>
+                <th>Datecommentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentaire in pagination.items %}
+            <tr>
+                <td>{{ commentaire.id }}</td>
+                <td>{{ commentaire.email }}</td>
+                <td>{{ commentaire.commentaire }}</td>
+                <td>{{ commentaire.datecommentaire ? commentaire.datecommentaire|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show |</a>
+                    <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit |</a>
+                      <a href="{{ path('app_commentaire_pdf', {'id': commentaire.id}) }}">pdf </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <div>
+            {{ knp_pagination_render(pagination) }} <!-- Utilise "pagination" au lieu de "commentaires" -->
+        </div>
+
+        {# Formulaire pour "Jump to page" #}
+        <div>
+            <form class="form-inline" method="get" action="{{ path(app.request.attributes.get('_route')) }}">
+                <label for="jump-to-page" class="mr-2">{{ 'Jump to page'|trans }}</label>
+                <input type="number" id="jump-to-page" name="page" min="1" 
+                       max="{{ (pagination.getTotalItemCount() // pagination.getItemNumberPerPage()) + 1 }}" 
+                       class="form-control" placeholder="{{ 'Page number'|trans }}" style="width: 100px;">
+                <button type="submit" class="btn btn-primary ml-2">{{ 'Go'|trans }}</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="{{ path('app_commentaire_new') }}">Create new</a>
+{% endblock %}

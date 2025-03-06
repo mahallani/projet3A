@@ -1,0 +1,34 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Article Details{% endblock %}
+
+{% block main %}
+    <h1>{{ article.titre }}</h1>
+    <p>{{ article.contenu }}</p>
+    <p class="text-muted">{{ article.datearticle ? article.datearticle|date('Y-m-d H:i:s') : '' }}</p>
+    <p>Vues: {{ article.nbrevue }}</p>
+    <p>Likes: {{ article.nbrelike }}</p>
+
+    <h2>Commentaires</h2>
+    {% for commentaire in article.Relation %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ commentaire.email }}</h5>
+                <p class="card-text">{{ commentaire.commentaire }}</p>
+                <p class="text-muted">{{ commentaire.datecommentaire|date('Y-m-d H:i:s') }}</p>
+            </div>
+        </div>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+
+    <h3>Ajouter un commentaire:</h3>
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.commentaire) }}
+        {{ form_row(form.datecommentaire) }}
+        <button type="submit" class="btn btn-success">Ajouter commentaire</button>
+    {{ form_end(form) }}
+
+    <br><a href="{{ path('app_article_indexfront') }}" class="btn btn-secondary">Back to Articles</a>
+{% endblock %}

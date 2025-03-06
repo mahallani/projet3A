@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Commentaire #{{ commentaire.id }}</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2C3E50;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2C3E50;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #7F8C8D;
+        }
+
+        /* Comment Details Section */
+        .comment-details {
+            margin: 20px 0;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #BDC3C7;
+        }
+
+        .comment-details h2 {
+            font-size: 20px;
+            color: #34495E;
+            margin-bottom: 15px;
+        }
+
+        .comment-details p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #555555;
+        }
+
+        .comment-details p strong {
+            color: #2C3E50;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: right;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #7F8C8D;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>{{ commentaire.commentaire }}</h1> <!-- Affichage du contenu du commentaire -->
+        <p>Email de l'utilisateur: {{ commentaire.email }}</p> <!-- Affichage de l'email de l'utilisateur -->
+    </div>
+
+    <!-- Comment Details Section -->
+    <div class="comment-details">
+        <h2>Détails du Commentaire</h2>
+        <p><strong>ID:</strong> {{ commentaire.id }}</p> <!-- Affichage de l'ID du commentaire -->
+        <p><strong>Commentaire:</strong> {{ commentaire.commentaire }}</p> <!-- Affichage du texte du commentaire -->
+        <p><strong>Email:</strong> {{ commentaire.email }}</p> <!-- Affichage de l'email de l'utilisateur -->
+        <p><strong>Date du Commentaire:</strong> {{ commentaire.datecommentaire|date('d-m-Y H:i') }}</p> <!-- Affichage de la date du commentaire -->
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>Date du commentaire: {{ commentaire.datecommentaire|date('d-m-Y H:i') }}</p> <!-- Date du commentaire -->
+    </div>
+</body>
+</html>

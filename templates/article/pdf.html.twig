@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Article #{{ article.id }}</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2C3E50;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2C3E50;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #7F8C8D;
+        }
+
+        /* Article Details Section */
+        .article-details {
+            margin: 20px 0;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #BDC3C7;
+        }
+
+        .article-details h2 {
+            font-size: 20px;
+            color: #34495E;
+            margin-bottom: 15px;
+        }
+
+        .article-details p {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #555555;
+        }
+
+        .article-details p strong {
+            color: #2C3E50;
+        }
+
+        /* Footer Styling */
+        .footer {
+            text-align: right;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #7F8C8D;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>{{ article.titre }}</h1>
+       
+    </div>
+
+    <!-- Article Details Section -->
+    <div class="article-details">
+        <h2>Contenu de l'article</h2>
+        <p>{{ article.contenu }}</p>
+    </div>
+    <div class="article-details">
+        <h2>  Galerie</h2>
+        <p>{{ article.Galerie }}</p>
+    </div>
+    <div class="article-details">
+        <h2>  Nombre de vue </h2>
+        <p>{{ article.Nbrevue }}</p>
+    </div>
+     <div class="article-details">
+        <h2>  Nombre de like </h2>
+        <p>{{ article.Nbrelike }}</p>
+    </div>
+    <div class="article-details">
+        <h2>  date de l'article </h2>
+      <p>{{ article.datearticle|date('d-m-Y H:i') }}</p>
+</div>
+    <!-- Footer Section -->
+    <div class="footer">
+        
+    </div>
+</body>
+</html>
