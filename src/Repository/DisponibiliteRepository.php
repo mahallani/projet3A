@@ -17,6 +17,7 @@ class DisponibiliteRepository extends ServiceEntityRepository
     }
 
 //    /**
+<<<<<<< HEAD
 //     * @return Disponibilite[] Returns an array of Disponibilite objects
 //     */
 //    public function findByExampleField($value): array
@@ -40,4 +41,7 @@ class DisponibiliteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+=======
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 }

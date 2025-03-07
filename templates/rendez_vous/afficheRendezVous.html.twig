@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base2.html.twig' %}
+=======
+{% extends 'base.html.twig' %}
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 {% block title %} Liste des Rendez-Vous {% endblock %}
 
@@ -19,7 +23,10 @@
                 <th>Statut</th>
                 <th>Jour</th>
                 <th>Heure</th>
+<<<<<<< HEAD
                 <th>Medecin</th>
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
                 <th>Actions</th>
             </tr>
         </thead>
@@ -41,7 +48,10 @@
                 </td>
                 <td>{{ rendezVous.jour|date('d/m/Y') }}</td>
                 <td>{{ rendezVous.heureString }}</td>
+<<<<<<< HEAD
                 <td>{{ rendezVous.heureR.idMedecin.nom }}</td>
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
  <td class="d-flex justify-content-center">
     <a href="{{ path('app_rendezvous_edit', { 'id': rendezVous.id }) }}" 
        class="btn btn-warning btn-sm mx-1"
@@ -68,8 +78,11 @@
     </table>
 </div>
 {% endblock %}
+<<<<<<< HEAD
 {% block footer %}
 
 {% endblock %}
 
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b

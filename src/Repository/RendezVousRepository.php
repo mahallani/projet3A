@@ -15,6 +15,7 @@ class RendezVousRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RendezVous::class);
     }
+<<<<<<< HEAD
     public function findRendezVousForTomorrow(): array
     {
         $demain = new \DateTime('+1 day');  // Calculer la date de demain
@@ -36,6 +37,13 @@ class RendezVousRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+=======
+
+    
+
+    
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     //    /**
     //     * @return RendezVous[] Returns an array of RendezVous objects

@@ -2,11 +2,17 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
 use App\Service\TwilioSmsService;
 use App\Entity\RendezVous;
 use App\Form\RendezVousType;
 use App\Entity\Disponibilite;
 use App\Entity\User;
+=======
+use App\Entity\RendezVous;
+use App\Form\RendezVousType;
+use App\Entity\Disponibilite;
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\DisponibiliteRepository;
+<<<<<<< HEAD
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\RendezVousRepository;
@@ -24,6 +31,10 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 
+=======
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\RendezVousRepository;
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 final class RendezVousController extends AbstractController
 {
@@ -36,12 +47,18 @@ final class RendezVousController extends AbstractController
     }
 
 
+<<<<<<< HEAD
     #[Route('/rendezvous/new', name: 'app_rendezvous_new')]
     public function add(Request $request, EntityManagerInterface $em): Response
+=======
+  #[Route('/rendezvous/new', name: 'app_rendezvous_new')]
+    public function add(Request $request, EntityManagerInterface $em)
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     {
         $rendezVous = new RendezVous();
         $form = $this->createForm(RendezVousType::class, $rendezVous);
         $form->handleRequest($request);
+<<<<<<< HEAD
     
         if ($form->isSubmitted() && $form->isValid()) 
         {
@@ -60,10 +77,23 @@ final class RendezVousController extends AbstractController
             $jour = $form->get('jour')->getData();
     
            
+=======
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+      
+            $requestData = $request->request->all();
+            $medecinId = $form->get('idMedecin')->getData();
+            $jour = $form->get('jour')->getData();
+
+
+         
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
                 'idMedecin' => $medecinId,
                 'jour' => $jour
             ]);
+<<<<<<< HEAD
     
             if ($disponibilite) {
                 $rendezVous->setHeureR($disponibilite);
@@ -79,22 +109,50 @@ final class RendezVousController extends AbstractController
             return $this->redirectToRoute('app_rendezvous_list');
         }
     
+=======
+            if ($disponibilite) {
+              
+                $rendezVous->setHeureR($disponibilite);
+            }
+            else {
+                $this->addFlash('error', "Aucune disponibilité trouvée pour ce médecin et ce jour.");
+                return $this->redirectToRoute('app_rendezvous_new');
+            }
+            $em->persist($rendezVous);
+            $em->flush();
+
+            $this->addFlash('success', 'Rendez-vous ajouté avec succès.');
+            return $this->redirectToRoute('app_rendezvous_list');
+        }
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         return $this->render('rendez_vous/ajoutRendezVous.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+<<<<<<< HEAD
     
      
+=======
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 
 
     #[Route('/rendezvous/getAvailableTimes/{medecinId}/{jour}', name: 'get_available_times')]
     public function getAvailableTimes(int $medecinId, string $jour, EntityManagerInterface $em): JsonResponse
+<<<<<<< HEAD
     {   
 
         $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
             'idMedecin' => $medecinId, 
             'jour' => new \DateTime($jour)
+=======
+    {
+        $disponibilite = $em->getRepository(Disponibilite::class)->findOneBy([
+            'idMedecin' => $medecinId,
+            'jour' => new \DateTime($jour) 
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         ]);
     
         if (!$disponibilite) {
@@ -120,6 +178,7 @@ final class RendezVousController extends AbstractController
     
         $heuresReservees = [];
         foreach ($rendezVous as $rdv) {
+<<<<<<< HEAD
             $heuresReservees[] = $rdv->getHeureString();
         }
     
@@ -127,12 +186,22 @@ final class RendezVousController extends AbstractController
         $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
     
         return new JsonResponse(array_values($heuresRestantes)); 
+=======
+            $heuresReservees[] = $rdv->getHeureString(); 
+        }
+    
+      
+        $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
+    
+        return new JsonResponse(array_values($heuresRestantes));
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     }
     
 
     
 
 #[Route('/rendezvous/view', name: 'app_rendezvous_list')]
+<<<<<<< HEAD
 public function listRendezVous(RendezVousRepository $RendezVousRepository, Security $security): Response
 {
     $patient = $security->getUser();
@@ -143,25 +212,38 @@ public function listRendezVous(RendezVousRepository $RendezVousRepository, Secur
 
    
     $rendezVousList = $RendezVousRepository->findBy(['patient' => $patient]);
+=======
+public function listRendezVous(RendezVousRepository $RendezVousRepository): Response
+{
+    $rendezVousList = $RendezVousRepository->findAll();
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     return $this->render('rendez_vous/afficheRendezVous.html.twig', [
         'rendezVousList' => $rendezVousList
     ]);
 }
 #[Route('/rendezvous/edit/{id}', name: 'app_rendezvous_edit')]
+<<<<<<< HEAD
 public function edit(  $id,   Request $request,  EntityManagerInterface $em,  RendezVousRepository $rendezVousRepository,   DisponibiliteRepository $disponibiliteRepository,TwilioSmsService $twilioSmsService,UserRepository $userRepository): Response 
 {
+=======
+public function edit(  $id,   Request $request,  EntityManagerInterface $em,  RendezVousRepository $rendezVousRepository,   DisponibiliteRepository $disponibiliteRepository): Response {
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $rendezVous = $rendezVousRepository->find($id);
 
     if (!$rendezVous) {
         throw $this->createNotFoundException("Le rendez-vous avec l'ID $id n'existe pas.");
     }
+<<<<<<< HEAD
     $ancienneDate = $rendezVous->getJour()->format('Y-m-d');
     $ancienneHeure = $rendezVous->getHeureString();
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     $form = $this->createForm(RendezVousType::class, $rendezVous);
     $form->handleRequest($request);
 
+<<<<<<< HEAD
    
     $medecinId = $rendezVous->getIdMedecin();
     $medecin = $userRepository->find($medecinId);
@@ -169,6 +251,13 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
     $jour = $rendezVous->getJour()->format('Y-m-d');
 
    
+=======
+  
+    $medecinId = $rendezVous->getIdMedecin();
+    $jour = $rendezVous->getJour()->format('Y-m-d');
+
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $disponibilite = $disponibiliteRepository->findOneBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -181,7 +270,11 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
             : $disponibilite->getHeuresDisp();
     }
 
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $rendezVousExistants = $rendezVousRepository->findBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -189,11 +282,16 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
 
     $heuresReservees = [];
     foreach ($rendezVousExistants as $rdv) {
+<<<<<<< HEAD
+=======
+      
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         if ($rdv->getId() !== $id) {
             $heuresReservees[] = $rdv->getHeureString();
         }
     }
 
+<<<<<<< HEAD
     
     $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
 
@@ -209,6 +307,12 @@ public function edit(  $id,   Request $request,  EntityManagerInterface $em,  Re
 
             $twilioSmsService->sendSms($numeroMedecin, $message);
         }
+=======
+   
+    $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         $em->persist($rendezVous);
         $em->flush();
 
@@ -240,6 +344,7 @@ public function deleteRendezVous($id, EntityManagerInterface $em, RendezVousRepo
     return $this->redirectToRoute('app_rendezvous_list');
 }
 #[Route('/rendezvous/view/back', name: 'app_rendezvous_listBack')]
+<<<<<<< HEAD
 public function listRendezVousBack(RendezVousRepository $rendezVousRepository, Security $security): Response
 {
   
@@ -250,12 +355,20 @@ public function listRendezVousBack(RendezVousRepository $rendezVousRepository, S
     }
 
     $rendezVousList = $rendezVousRepository->findBy(['idMedecin' => $medecin]);
+=======
+public function listRendezVousBack(RendezVousRepository $RendezVousRepository): Response
+{
+    $rendezVousList = $RendezVousRepository->findAll(); 
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     return $this->render('rendez_vous/afficheRendezVousBack.html.twig', [
         'rendezVousList' => $rendezVousList
     ]);
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 #[Route('/rendezvous/editBack/{id}', name: 'app_rendezvous_editBack')]
 public function editBack(  $id,   Request $request,  EntityManagerInterface $em,  RendezVousRepository $rendezVousRepository,   DisponibiliteRepository $disponibiliteRepository): Response {
     $rendezVous = $rendezVousRepository->find($id);
@@ -267,11 +380,19 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
     $form = $this->createForm(RendezVousType::class, $rendezVous);
     $form->handleRequest($request);
 
+<<<<<<< HEAD
    
     $medecinId = $rendezVous->getIdMedecin();
     $jour = $rendezVous->getJour()->format('Y-m-d');
 
    
+=======
+  
+    $medecinId = $rendezVous->getIdMedecin();
+    $jour = $rendezVous->getJour()->format('Y-m-d');
+
+  
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $disponibilite = $disponibiliteRepository->findOneBy([
         'idMedecin' => $medecinId,
         'jour' => new \DateTime($jour)
@@ -292,13 +413,21 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
 
     $heuresReservees = [];
     foreach ($rendezVousExistants as $rdv) {
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         if ($rdv->getId() !== $id) {
             $heuresReservees[] = $rdv->getHeureString();
         }
     }
 
+<<<<<<< HEAD
   
+=======
+   
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $heuresRestantes = array_diff($heuresDisponibles, $heuresReservees);
 
     if ($form->isSubmitted() && $form->isValid()) {
@@ -313,7 +442,11 @@ public function editBack(  $id,   Request $request,  EntityManagerInterface $em,
         'form' => $form->createView(),
         'title' => 'Modifier le Rendez-Vous',
         'ancienneHeure' => $rendezVous->getHeureString(),
+<<<<<<< HEAD
         'heuresDisponibles' => array_values($heuresRestantes) 
+=======
+        'heuresDisponibles' => array_values($heuresRestantes)
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     ]);
 }
 
@@ -331,6 +464,7 @@ public function deleteRendezVousBack($id, EntityManagerInterface $em, RendezVous
 
     return $this->redirectToRoute('app_rendezvous_listBack');
 }
+<<<<<<< HEAD
 #[Route('/medecin/calendar', name: 'medecin_calendar')]
 #[IsGranted('ROLE_MEDECIN')] // S'assurer que seul un médecin peut accéder
 public function calendar(): Response
@@ -393,5 +527,7 @@ public function show(RendezVous $rendezVous): Response
     ]);
 }
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 }

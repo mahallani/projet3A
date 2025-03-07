@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base3.html.twig' %}
+=======
+{% extends 'base1.html.twig' %}
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 {% block title %}Ajouter une Disponibilité{% endblock %}
 
@@ -27,6 +31,7 @@
 
 
     <div class="mb-3">
+<<<<<<< HEAD
     {{ form_label(form.idMedecin, 'Médecin', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
     <div class="text-danger">
@@ -34,6 +39,14 @@
     </div>
 </div>
 
+=======
+        {{ form_label(form.idMedecin, 'Médecin', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.idMedecin, {'attr': {'class': 'form-control'}}) }}
+        <div class="text-danger">
+            {{ form_errors(form.idMedecin) }}
+        </div>
+    </div>
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
    <div id="time-slots" data-prototype="{{ form_widget(form.heuresDisp.vars.prototype)|e }}">
     {% for heureDisp in form.heuresDisp %}
@@ -47,7 +60,10 @@
     {% endfor %}
 </div>
 
+<<<<<<< HEAD
 <!-- Erreur globale si aucun créneau horaire n'a été ajouté -->
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 <div class="text-danger">
     {{ form_errors(form.heuresDisp) }}
 </div>
@@ -65,6 +81,7 @@
 </div>
 <style>
     .form-label {
+<<<<<<< HEAD
         color: #000 !important;  /* Texte en noir */
         font-weight: bold;       /* Texte en gras */
     }
@@ -77,6 +94,20 @@
 
     .btn-success {
         font-weight: bold;       /* Texte en gras sur le bouton */
+=======
+        color: #000 !important;  
+        font-weight: bold;       
+    }
+    
+    .form-control, .form-select {
+        color: #000 !important;  
+        font-weight: bold;       
+        border: 2px solid #000;  
+    }
+
+    .btn-success {
+        font-weight: bold;       
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     }
 </style>
 <script>

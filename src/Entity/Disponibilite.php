@@ -8,8 +8,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+<<<<<<< HEAD
 use App\Entity\User; 
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 
 #[ORM\Entity(repositoryClass: DisponibiliteRepository::class)]
@@ -37,6 +40,12 @@ class Disponibilite
     #[Assert\NotBlank(message: "Le statut de disponibilité est obligatoire.")]
     private ?string $statutDisp = null;
 
+<<<<<<< HEAD
+=======
+    #[ORM\Column]
+    #[Assert\NotNull(message: "Le médecin est requis.")]
+    private ?int $idMedecin = null;
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     /**
      * @var Collection<int, RendezVous>
@@ -44,10 +53,13 @@ class Disponibilite
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'heureR')]
     private Collection $rendezVouses;
 
+<<<<<<< HEAD
     #[ORM\ManyToOne(inversedBy: 'disponibilites')]
     #[Assert\NotNull(message: "Le médecin est requis.")]
     private ?User $idMedecin = null;
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     public function __construct()
     {
         $this->rendezVouses = new ArrayCollection();
@@ -71,10 +83,14 @@ class Disponibilite
         return $this;
     }
 
+<<<<<<< HEAD
     // public function getHeuresDisp(): array
     // {
     //     return $this->heuresDisp;
     // }
+=======
+  
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     public function getHeuresDisp(): array
 {
@@ -87,6 +103,7 @@ public function setHeuresDisp(array $heuresDisp): self
     return $this;
 }
 
+<<<<<<< HEAD
     // public function setHeuresDisp(array $heuresDisp): static
     // {
     //     $this->heuresDisp = $heuresDisp;
@@ -94,6 +111,8 @@ public function setHeuresDisp(array $heuresDisp): self
     //     return $this;
     // }
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     public function getStatutDisp(): ?string
     {
         return $this->statutDisp;
@@ -106,7 +125,21 @@ public function setHeuresDisp(array $heuresDisp): self
         return $this;
     }
 
+<<<<<<< HEAD
 
+=======
+    public function getIdMedecin(): ?int
+    {
+        return $this->idMedecin;
+    }
+
+    public function setIdMedecin(?int $idMedecin): static
+    {
+        $this->idMedecin = $idMedecin;
+
+        return $this;
+    }
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     public function isReserved(): bool
     {
         return in_array(strtolower($this->statutDisp), ['Disponible', 'Indisponible']);
@@ -133,6 +166,10 @@ public function setHeuresDisp(array $heuresDisp): self
     public function removeRendezVouse(RendezVous $rendezVouse): static
     {
         if ($this->rendezVouses->removeElement($rendezVouse)) {
+<<<<<<< HEAD
+=======
+         
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             if ($rendezVouse->getHeureR() === $this) {
                 $rendezVouse->setHeureR(null);
             }
@@ -140,6 +177,7 @@ public function setHeuresDisp(array $heuresDisp): self
 
         return $this;
     }
+<<<<<<< HEAD
 
     public function getIdMedecin(): ?User
     {
@@ -152,4 +190,8 @@ public function setHeuresDisp(array $heuresDisp): self
 
         return $this;
     }
+=======
+    
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 }

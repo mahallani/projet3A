@@ -10,10 +10,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Entity\Disponibilite;
+<<<<<<< HEAD
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 
 
@@ -36,12 +39,21 @@ class DisponibiliteType extends AbstractType
                         '14:00 - 16:00' => '14:00-16:00',
                         '16:00 - 18:00' => '16:00-18:00',
                     ],
+<<<<<<< HEAD
                     'label' => false, // Supprime le label pour éviter la duplication
                 ],
                 'allow_add' => true,  // Permet d'ajouter dynamiquement
                 'allow_delete' => true, // Permet de supprimer un créneau
                 'by_reference' => false,
                 'prototype' => true, // Active le prototype pour JavaScript
+=======
+                    'label' => false,
+                ],
+                'allow_add' => true, 
+                'allow_delete' => true, 
+                'by_reference' => false,
+                'prototype' => true, 
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             ])
         
     ->add('statutDisp', ChoiceType::class, [
@@ -49,6 +61,7 @@ class DisponibiliteType extends AbstractType
             'Disponible' => 'Disponible',
             'Indisponible' => 'Indisponible',
         ],
+<<<<<<< HEAD
         'expanded' => true,  // Affiche comme boutons radio (facultatif)
         'multiple' => false, // Un seul choix possible
     ])
@@ -75,6 +88,21 @@ class DisponibiliteType extends AbstractType
             ->add('save', SubmitType::class, [
                 'label' => 'Ajouter',
                 'attr' => ['class' => 'btn btn-success d-none'], // Caché par défaut
+=======
+        'expanded' => true,  
+        'multiple' => false,
+    ])
+
+            ->add('idMedecin', TextType::class, [
+                'label' => 'ID du Médecin',
+                'attr' => [
+                    'placeholder' => 'Entrez l\'ID du médecin'
+                ]
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Ajouter',
+                'attr' => ['class' => 'btn btn-success d-none'], 
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             ]);
     }
 
@@ -82,8 +110,11 @@ class DisponibiliteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Disponibilite::class,
+<<<<<<< HEAD
             'user' => null, // To pass the user from the controller
             'isMedecin' => false,
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         ]);
     }
 }

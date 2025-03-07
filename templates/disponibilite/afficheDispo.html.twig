@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base2.html.twig' %}
+=======
+{% extends 'base.html.twig' %}
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 {% block title %} Availability List {% endblock %}
 
@@ -34,7 +38,11 @@
                             <span class="badge" style="background-color: #dc3545; color: white; padding: 6px 12px;">❌ Indisponible</span>
                         {% endif %}
                     </td>
+<<<<<<< HEAD
                     <td class="fw-bold" style="color: #444;">👨‍⚕️ {{ disponibilite.idMedecin.nom }}</td>
+=======
+                    <td class="fw-bold" style="color: #444;">👨‍⚕️ {{ disponibilite.idMedecin }}</td>
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
                 </tr>
                 {% else %}
                 <tr>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends 'base3.html.twig' %}
+=======
+{% extends 'base1.html.twig' %}
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 {% block title %}Modifier une Disponibilité{% endblock %}
 
@@ -11,7 +15,11 @@
         <div class="card-body p-4">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+<<<<<<< HEAD
             <!-- Sélection du Médecin -->
+=======
+      
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-user-md"></i> Médecin</label>
                 {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
@@ -21,7 +29,11 @@
             </div>
        
 
+<<<<<<< HEAD
             <!-- Sélection du Jour -->
+=======
+          
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour</label>
                 {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
@@ -31,17 +43,28 @@
 
             </div>
         
+<<<<<<< HEAD
 <!-- Sélection de l'Heure -->
+=======
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 <div class="d-flex justify-content-center">
     <div class="mb-3 text-center">
         <label class="form-label fw-bold"><i class="fas fa-clock"></i> Sélectionnez une heure</label>
         <div class="input-group mx-auto" style="width: 250px;">
             <span class="input-group-text bg-light"><i class="fas fa-clock"></i></span>
             <select id="heureString_select" name="heureString" class="form-select">
+<<<<<<< HEAD
                 <!-- Affichage de l'heure actuellement sélectionnée -->
                 <option value="{{ ancienneHeure }}" selected>{{ ancienneHeure }}</option>
 
                 <!-- Affichage des autres heures disponibles -->
+=======
+             
+                <option value="{{ ancienneHeure }}" selected>{{ ancienneHeure }}</option>
+
+               
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
                 {% for heure in heuresDisponibles %}
                     {% if heure != ancienneHeure %}
                         <option value="{{ heure }}">{{ heure }}</option>
@@ -56,7 +79,11 @@
 
 
 
+<<<<<<< HEAD
             <!-- Motif du Rendez-vous -->
+=======
+         
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
                 {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
@@ -66,7 +93,11 @@
             </div>
       
 
+<<<<<<< HEAD
             <!-- Symptômes -->
+=======
+          
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-thermometer-half"></i> Symptômes</label>
                 {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
@@ -76,7 +107,11 @@
             </div>
   
 
+<<<<<<< HEAD
             <!-- Traitement en cours -->
+=======
+          
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
                 {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
@@ -86,7 +121,10 @@
             </div>
     
 
+<<<<<<< HEAD
             <!-- Notes -->
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-sticky-note"></i> Notes</label>
                 {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
@@ -94,7 +132,11 @@
             
 
 
+<<<<<<< HEAD
             <!-- Bouton Modifier -->
+=======
+          
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Modifier</button>
                 <a href="{{ path('app_rendezvous_listBack') }}" class="btn btn-secondary px-4"><i class="fas fa-arrow-left"></i> Retour</a>
@@ -136,10 +178,17 @@ $(document).ready(function () {
         }
     }
 
+<<<<<<< HEAD
    
     $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
 
   
+=======
+  
+    $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
+
+   
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     $('#heureString_select').change(function () {
         $('#rendez_vous_heureString').val($(this).val());
     });

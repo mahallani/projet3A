@@ -39,13 +39,21 @@ class RendezVous
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $creation = null;
 
+<<<<<<< HEAD
+=======
+    #[ORM\Column]
+    private ?int $idMedecin = null;
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "L'heure du rendez-vous est obligatoire.")]
     private ?string $heureString = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
+<<<<<<< HEAD
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     private ?Disponibilite $heureR = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -53,6 +61,7 @@ class RendezVous
     #[Assert\GreaterThan('today', message: "Le jour doit être dans le futur.")]
     private ?\DateTimeInterface $jour = null;
 
+<<<<<<< HEAD
     #[ORM\ManyToOne(inversedBy: 'rendezvouses')]
     #[ORM\JoinColumn(name: "id_medecin_id", referencedColumnName: "id", nullable: false)]
     private ?User $idMedecin = null;
@@ -61,6 +70,8 @@ class RendezVous
     #[ORM\JoinColumn(name: "patient_id", referencedColumnName: "id", nullable: false)]
     private ?User $patient = null;
    
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 
     public function getId(): ?int
@@ -142,6 +153,32 @@ class RendezVous
         return $this;
     }
 
+<<<<<<< HEAD
+=======
+    public function getIdPatient(): ?int
+    {
+        return $this->idPatient;
+    }
+
+    public function setIdPatient(int $idPatient): static
+    {
+        $this->idPatient = $idPatient;
+
+        return $this;
+    }
+
+    public function getIdMedecin(): ?int
+    {
+        return $this->idMedecin;
+    }
+
+    public function setIdMedecin(int $idMedecin): static
+    {
+        $this->idMedecin = $idMedecin;
+
+        return $this;
+    }
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
     public function getHeureR(): ?Disponibilite
     {
@@ -177,6 +214,7 @@ class RendezVous
         return $this;
     }
 
+<<<<<<< HEAD
     public function getIdMedecin(): ?User
     {
         return $this->idMedecin;
@@ -201,5 +239,7 @@ class RendezVous
         return $this;
     }
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 }

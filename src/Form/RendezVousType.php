@@ -13,8 +13,12 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+<<<<<<< HEAD
 use App\Entity\User;
 use App\Repository\UserRepository;
+=======
+
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 
 class RendezVousType extends AbstractType
@@ -22,6 +26,7 @@ class RendezVousType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+<<<<<<< HEAD
         
         ->add('idMedecin', EntityType::class, [
             'class' => User::class,
@@ -37,12 +42,20 @@ class RendezVousType extends AbstractType
         
         
         
+=======
+        ->add('idMedecin', IntegerType::class, [
+            'required' => true,
+            'attr' => ['class' => 'form-control', 'placeholder' => 'ID du médecin']
+        ])
+        
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         ->add('jour', DateType::class, [
             'widget' => 'single_text',
             'html5' => true,
             
         ])
         ->add('heureString', HiddenType::class, [
+<<<<<<< HEAD
             'mapped' => true, // ✅ Stocke bien la valeur dans l'entité
         ])
         
@@ -54,6 +67,13 @@ class RendezVousType extends AbstractType
         //     'mapped' => false, //  Symfony ne va pas le mapper automatiquement
         //     'attr' => ['class' => 'form-control']
         // ])
+=======
+            'mapped' => true, 
+        ])
+        
+
+   
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         ->add('motif')
         ->add('symptomes')
         ->add('traitementEnCours')
@@ -65,7 +85,11 @@ class RendezVousType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RendezVous::class,
+<<<<<<< HEAD
             'available_times' => [], // Option pour stocker les créneaux horaires du médecin
+=======
+            'available_times' => [], 
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         ]);
     }
 }

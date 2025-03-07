@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 {% extends 'base2.html.twig' %}
+=======
+{% extends 'base.html.twig' %}
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
 {% block title %}Ajouter un Rendez-Vous{% endblock %}
 {% block main %}
@@ -11,7 +15,10 @@
         <div class="card-body p-4">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+<<<<<<< HEAD
             <!-- Sélection du Médecin -->
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Médecin</label>
                 {{ form_widget(form.idMedecin, {'attr': {'class': 'form-select'}}) }}
@@ -21,7 +28,10 @@
             </div>
             
 
+<<<<<<< HEAD
             <!-- Sélection du Jour -->
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-calendar-day"></i> Jour du Rendez-Vous</label>
                 {{ form_widget(form.jour, {'attr': {'class': 'form-control', 'type': 'date'}}) }}
@@ -31,7 +41,11 @@
             </div>
     
 
+<<<<<<< HEAD
               <!-- Sélection de l'Heure -->
+=======
+    
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
          <div class="d-flex justify-content-center">
     <div class="mb-3 text-center">
         <label class="form-label fw-bold"><i class="fas fa-clock"></i> Sélectionnez une heure</label>
@@ -48,7 +62,10 @@
          </div>
 
 
+<<<<<<< HEAD
             <!-- Motif du Rendez-vous -->
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Motif</label>
                 {{ form_widget(form.motif, {'attr': {'class': 'form-control'}}) }}
@@ -58,7 +75,11 @@
 
             </div>
       
+<<<<<<< HEAD
             <!-- Symptômes -->
+=======
+     
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Symptômes</label>
                 {{ form_widget(form.symptomes, {'attr': {'class': 'form-control'}}) }}
@@ -68,7 +89,11 @@
             </div>
          
 
+<<<<<<< HEAD
             <!-- Traitement en cours -->
+=======
+     
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-pills"></i> Traitement en Cours</label>
                 {{ form_widget(form.traitementEnCours, {'attr': {'class': 'form-control'}}) }}
@@ -78,13 +103,18 @@
             </div>
        
 
+<<<<<<< HEAD
             <!-- Notes -->
+=======
+      
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
             <div class="mb-3">
                 <label class="form-label fw-bold"><i class="fas fa-file-alt"></i> Notes</label>
                 {{ form_widget(form.notes, {'attr': {'class': 'form-control'}}) }}
             </div>
 
 
+<<<<<<< HEAD
             <!-- Bouton Ajouter -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Ajouter</button>
@@ -92,6 +122,12 @@
             <a href="{{ path('app_rendezvous_list') }}" class="btn-create">
             <i class="bi bi-plus-circle"></i> Detail du rendez-vous
  </a>
+=======
+      
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4"><i class="fas fa-save"></i> Ajouter</button>
+            </div>
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
 
             {{ form_end(form) }}
         </div>
@@ -99,6 +135,7 @@
 </div>
 <style>
     .form-label {
+<<<<<<< HEAD
         color: #000 !important;  /* Texte en noir */
         font-weight: bold;       /* Texte en gras */
     }
@@ -111,6 +148,20 @@
 
     .btn-success {
         font-weight: bold;       /* Texte en gras sur le bouton */
+=======
+        color: #000 !important; 
+        font-weight: bold;       
+    }
+    
+    .form-control, .form-select {
+        color: #000 !important;  
+        font-weight: bold;       
+        border: 2px solid #000;  
+    }
+
+    .btn-success {
+        font-weight: bold;       
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     }
 </style>
 
@@ -120,19 +171,28 @@
 <script>
 $(document).ready(function () {
     function loadAvailableTimes() {
+<<<<<<< HEAD
         let medecinId = $('#rendez_vous_idMedecin').val(); 
         let jour = $('#rendez_vous_jour').val();
         
         console.log("🔍 Médecin sélectionné :", medecinId);
         console.log("📅 Jour sélectionné :", jour);
 
+=======
+        let medecinId = $('#rendez_vous_idMedecin').val();
+        let jour = $('#rendez_vous_jour').val();
+        
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
         if (medecinId && jour) {
             $.ajax({
                 url: `/rendezvous/getAvailableTimes/${medecinId}/${encodeURIComponent(jour)}`,
                 type: 'GET',
                 success: function (response) {
+<<<<<<< HEAD
                     console.log("✅ Heures disponibles reçues :", response);
 
+=======
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
                     let select = $('#heureString_select');
                     select.empty(); 
                     select.append(new Option('-- Sélectionnez une heure --', ''));
@@ -143,12 +203,19 @@ $(document).ready(function () {
                         });
                     } else {
                         select.append(new Option('Aucune disponibilité', ''));
+<<<<<<< HEAD
                         console.warn("⚠️ Aucune disponibilité pour ce jour.");
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("❌ Erreur AJAX :", status, error);
                     console.error("Réponse serveur :", xhr.responseText);
+=======
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Erreur AJAX :", status, error);
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
                 }
             });
         }
@@ -157,10 +224,16 @@ $(document).ready(function () {
     
     $('#rendez_vous_idMedecin, #rendez_vous_jour').change(loadAvailableTimes);
 
+<<<<<<< HEAD
    
     $('#heureString_select').change(function () {
         $('#rendez_vous_heureString').val($(this).val());
         console.log("🕒 Heure sélectionnée :", $(this).val());
+=======
+    
+    $('#heureString_select').change(function () {
+        $('#rendez_vous_heureString').val($(this).val());
+>>>>>>> dd238d0bf7bf109232031f042ecf1572bb2c662b
     });
 });
 
