@@ -1,49 +1,54 @@
 <?php
 
+// src/Command/SendReminderEmailsCommand.php
 namespace App\Command;
 
-use Symfony\Component\Console\Attribute\AsCommand;
+use App\Repository\RendezVousRepository;
+use App\Service\EmailService;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'SendReminderEmails',
-    description: 'Add a short description for your command',
-)]
 class SendReminderEmailsCommand extends Command
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected static $defaultName = 'app:send-reminder-emails';
 
-    protected function configure(): void
+    private $rendezVousRepository;
+    private $emailService;
+
+    public function __construct(RendezVousRepository $rendezVousRepository, EmailService $emailService)
     {
-        $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+        $this->rendezVousRepository = $rendezVousRepository;
+        $this->emailService = $emailService;
+
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        // Récupérer les rendez-vous dans les 24 à 48 heures
+        $now = new \DateTime();
+        $start = (clone $now)->modify('+24 hours');
+        $end = (clone $now)->modify('+48 hours');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        $rendezVous = $this->rendezVousRepository->findByDateRange($start, $end);
+
+        foreach ($rendezVous as $rdv) {
+            $patiente = $rdv->getPatient();
+            $subject = 'Rappel de rendez-vous';
+            $content = sprintf(
+                'Bonjour %s, vous avez un rendez-vous le %s à %s avec le Dr %s.',
+                $patiente->getPrenom(),
+                $rdv->getDateHeure()->format('d/m/Y'),
+                $rdv->getDateHeure()->format('H:i'),
+                $rdv->getIdMedecin()->getNom()
+            );
+
+            // Envoyer l'e-mail de rappel
+            $this->emailService->sendReminderEmail($patiente->getEmail(), $subject, $content);
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
+        $output->writeln('E-mails de rappel envoyés avec succès !');
         return Command::SUCCESS;
     }
 }

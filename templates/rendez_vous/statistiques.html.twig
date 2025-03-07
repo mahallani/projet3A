@@ -1,0 +1,43 @@
+{% extends 'base3.html.twig' %}
+
+{% block title %}Statistiques des Médecins{% endblock %}
+
+{% block main %}
+    <h1>Statistiques des Rendez-vous par Médecin</h1>
+    
+    <canvas id="medecinChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("{{ path('stat_medecins') }}") // Appel AJAX pour récupérer les stats
+                .then(response => response.json())
+                .then(data => {
+                    let labels = data.map(item => item.nom);
+                    let values = data.map(item => item.nbRdv);
+
+                    new Chart(document.getElementById("medecinChart"), {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Nombre de Rendez-vous',
+                                data: values,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+        });
+    </script>
+{% endblock %}

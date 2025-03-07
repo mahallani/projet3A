@@ -19,11 +19,20 @@ export default class extends Controller {
                     events: events, // Injecter les événements
 
                     eventClick: function(info) {
-                        console.log("🖱️ Event click detected", info.event);
+                        info.jsEvent.preventDefault(); // Empêche la redirection
 
-                        if (info.event.url) {
-                            window.location.href = info.event.url; // 🔗 Rediriger vers la page du rendez-vous
-                        }
+                        console.log("🖱️ Event click detected", info.event);
+                        let modal = document.getElementById("eventModal");
+                        let modalContent = document.getElementById("modalContent");
+
+                        // Charger le contenu du rendez-vous via AJAX
+                        fetch(info.event.url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+                            .then(response => response.text())
+                            .then(html => {
+                                modalContent.innerHTML = html; // Injecte le contenu AJAX dans le modal
+                                modal.style.display = "flex";
+                            })
+                            .catch(error => console.error("❌ Erreur lors du chargement du modal :", error));
                     }
                 });
 
@@ -32,3 +41,4 @@ export default class extends Controller {
             .catch(error => console.error("❌ Erreur lors du chargement des événements :", error));
     }
 }
+

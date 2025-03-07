@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des Rendez-vous{% endblock %}
+
+{% block body %}
+    <h1>📊 Statistiques des Rendez-vous</h1>
+
+    <p>📌 Moyenne des rendez-vous par médecin : <strong>{{ moyenneRendezVous|number_format(2) }}</strong></p>
+
+    <h2>🏥 Médecins les plus sollicités</h2>
+    <div style="width: 60%; margin: auto;">
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}

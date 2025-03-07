@@ -39,6 +39,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+    public function getNombreMoyenRendezVousParMedecin()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('COUNT(r.id) as rdv_count')
+            ->leftJoin('App\Entity\RendezVous', 'r', 'WITH', 'r.idMedecin = u.id')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_MEDECIN%')
+            ->groupBy('u.id')
+            ->getQuery()
+            ->getResult();
+    
+        // Calculer la moyenne en PHP
+        $total = array_sum(array_column($qb, 'rdv_count'));
+        $nombreMedecins = count($qb);
+        
+        return $nombreMedecins > 0 ? $total / $nombreMedecins : 0;
+    }
+    
 
     //    /**
     //     * @return User[] Returns an array of User objects

@@ -17,6 +17,7 @@
 
     
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{ asset('assets/frontoffice/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/frontoffice/css/nice-select.css') }}">
@@ -233,6 +234,7 @@
 
         
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
             <!-- Scripts -->
     <!-- jQuery Min JS -->
     <script src="{{ asset('assets/frontoffice/js/jquery.min.js') }}"></script>

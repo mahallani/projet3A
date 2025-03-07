@@ -1,0 +1,7 @@
+<div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Rendez-vous avec {{ rdv.patient.nom }}</h3>
+    <p><strong>Date :</strong> {{ rdv.date|date('d/m/Y') }}</p>
+    <p><strong>Heure :</strong> {{ rdv.date|date('H:i') }} - {{ rdv.endDate|date('H:i') }}</p>
+    <p><strong>Motif :</strong> {{ rdv.motif }}</p>
+</div>

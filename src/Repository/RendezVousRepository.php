@@ -28,6 +28,14 @@ class RendezVousRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findAverageRendezVousByMedecin()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('IDENTITY(r.idMedecin) as medecinId, AVG(r.id) as averageRendezVous')
+            ->groupBy('r.idMedecin')
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return RendezVous[] Returns an array of RendezVous objects
